@@ -207,7 +207,7 @@ public class ProteinHgvsExtensionTest {
         assertFalse(hgvs.hasSecond());      
     }
     
-    @Test
+    @Test(expected =UnsupportedOperationException.class)
     public void testCConvert2Location(){
         String val= "LRG_199p1:p.Met1Valext-12";
         ProteinHgvs hgvs = ProteinHgvss.create(val);

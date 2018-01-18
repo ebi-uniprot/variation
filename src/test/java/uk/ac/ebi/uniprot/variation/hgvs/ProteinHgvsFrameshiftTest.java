@@ -124,7 +124,7 @@ public class ProteinHgvsFrameshiftTest {
          
     }
     
-    @Test
+    @Test(expected =UnsupportedOperationException.class)
     public void testConvert2Location(){
   
         String val= "LRG_199p1:p.Arg97fs";

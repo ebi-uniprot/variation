@@ -92,7 +92,7 @@ public class ProteinHgvsRepeatTest {
         assertTrue(hgvs.hasSecond());      
     }
     
-    @Test
+    @Test(expected =UnsupportedOperationException.class)
     public void testConvert2Location(){
   
         String val= "LRG_199p1:p.Arg65_Ser67[12]";
