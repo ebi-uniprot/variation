@@ -10,8 +10,8 @@ import lombok.Data;
 @Builder(builderClassName = "VariantCallFormatBuilder")
 @Data
 public class VariantCallFormatImpl implements VariantCallFormat {
-    private static final String STOP = ".";
-    private static final String TAB = "\t";
+//    private static final String STOP = ".";
+//    private static final String TAB = "\t";
     private final String chromosome;
     private final int position;
     private final String id;

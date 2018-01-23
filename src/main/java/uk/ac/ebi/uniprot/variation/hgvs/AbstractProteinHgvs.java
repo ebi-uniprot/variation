@@ -1,6 +1,6 @@
 package uk.ac.ebi.uniprot.variation.hgvs;
 
-import uk.ac.ebi.uniprot.variation.VariantLocation;
+import uk.ac.ebi.uniprot.variation.VariationLocation;
 
 public class AbstractProteinHgvs implements ProteinHgvs {
     private final ProteinHgvsType type;
@@ -41,7 +41,7 @@ public class AbstractProteinHgvs implements ProteinHgvs {
     }
 
     @Override
-    public VariantLocation convert2Location() {
+    public VariationLocation convert2Location() {
         // TODO Auto-generated method stub
         return null;
     }

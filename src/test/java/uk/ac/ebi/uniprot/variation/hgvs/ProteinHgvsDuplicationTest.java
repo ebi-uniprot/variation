@@ -1,7 +1,7 @@
 package uk.ac.ebi.uniprot.variation.hgvs;
 
 import uk.ac.ebi.uniprot.variation.LocationType;
-import uk.ac.ebi.uniprot.variation.VariantLocation;
+import uk.ac.ebi.uniprot.variation.VariationLocation;
 import uk.ac.ebi.uniprot.variation.hgvs.ProteinHgvs;
 import uk.ac.ebi.uniprot.variation.hgvs.ProteinHgvsType;
 import uk.ac.ebi.uniprot.variation.hgvs.ProteinHgvss;
@@ -97,7 +97,7 @@ public class ProteinHgvsDuplicationTest {
         String val= "LRG_199p1:p.Ala3_Ser5dup";
         ProteinHgvs hgvs = ProteinHgvss.create(val);
         assertNotNull(hgvs);
-        VariantLocation location = hgvs.convert2Location();
+        VariationLocation location = hgvs.convert2Location();
         assertNotNull(location);
         assertEquals(LocationType.PROTEIN, location.getLocationType());
         assertEquals("LRG_199p1", location.getSequenceId());
@@ -115,7 +115,7 @@ public class ProteinHgvsDuplicationTest {
         ProteinHgvs hgvs = ProteinHgvss.create(val);
         assertNotNull(hgvs);
         
-        VariantLocation location = hgvs.convert2Location();
+        VariationLocation location = hgvs.convert2Location();
         assertNotNull(location);
         assertEquals(LocationType.PROTEIN, location.getLocationType());
         assertEquals("LRG_199p1", location.getSequenceId());

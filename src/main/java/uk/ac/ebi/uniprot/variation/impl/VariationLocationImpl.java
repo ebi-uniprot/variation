@@ -1,14 +1,14 @@
 package uk.ac.ebi.uniprot.variation.impl;
 
 import uk.ac.ebi.uniprot.variation.LocationType;
-import uk.ac.ebi.uniprot.variation.VariantLocation;
+import uk.ac.ebi.uniprot.variation.VariationLocation;
 
 import lombok.Builder;
 import lombok.Data;
 
-@Builder(builderClassName = "VariantLocationBuilder")
+@Builder(builderClassName = "VariationLocationBuilder")
 @Data
-public class VariantLocationImpl implements VariantLocation {
+public class VariationLocationImpl implements VariationLocation {
     private final LocationType locationType;
     private final Long start;
     private final Long end;

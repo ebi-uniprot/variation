@@ -1,6 +1,6 @@
 package uk.ac.ebi.uniprot.variation.hgvs;
 
-import uk.ac.ebi.uniprot.variation.VariantLocation;
+import uk.ac.ebi.uniprot.variation.VariationLocation;
 import uk.ac.ebi.uniprot.variation.hgvs.ProteinHgvs;
 import uk.ac.ebi.uniprot.variation.hgvs.ProteinHgvsType;
 import uk.ac.ebi.uniprot.variation.hgvs.ProteinHgvss;
@@ -130,7 +130,7 @@ public class ProteinHgvsFrameshiftTest {
         String val= "LRG_199p1:p.Arg97fs";
         ProteinHgvs hgvs = ProteinHgvss.create(val);
         assertNotNull(hgvs);
-        VariantLocation location = hgvs.convert2Location();
+        VariationLocation location = hgvs.convert2Location();
         assertNull(location);
          
     }

@@ -1,6 +1,6 @@
 package uk.ac.ebi.uniprot.variation;
 
-public interface VariantLocation{
+public interface VariationLocation{
     LocationType getLocationType();
     Long getStart();
     Long getEnd();

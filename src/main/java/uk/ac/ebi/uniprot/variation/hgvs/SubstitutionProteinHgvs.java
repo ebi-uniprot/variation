@@ -2,8 +2,8 @@ package uk.ac.ebi.uniprot.variation.hgvs;
 
 
 import uk.ac.ebi.uniprot.variation.LocationType;
-import uk.ac.ebi.uniprot.variation.VariantLocation;
-import uk.ac.ebi.uniprot.variation.impl.VariantLocationImpl;
+import uk.ac.ebi.uniprot.variation.VariationLocation;
+import uk.ac.ebi.uniprot.variation.impl.VariationLocationImpl;
 import uk.ac.ebi.uniprot.variation.util.VariationUtil;
 
 import java.util.regex.Matcher;
@@ -22,8 +22,8 @@ public class SubstitutionProteinHgvs extends AbstractProteinHgvs{
     }
 
     @Override
-    public VariantLocation convert2Location() {
-        VariantLocationImpl.VariantLocationBuilder builder = VariantLocationImpl.builder();
+    public VariationLocation convert2Location() {
+        VariationLocationImpl.VariationLocationBuilder builder = VariationLocationImpl.builder();
         builder.locationType(LocationType.PROTEIN)
                 .sequenceId(this.getPrimaryId())
                 .wildType(this.getWildType())

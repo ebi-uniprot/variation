@@ -1,6 +1,6 @@
 package uk.ac.ebi.uniprot.variation.hgvs;
 
-import uk.ac.ebi.uniprot.variation.VariantLocation;
+import uk.ac.ebi.uniprot.variation.VariationLocation;
 
 public interface ProteinHgvs {
     ProteinHgvsType getType();
@@ -13,7 +13,7 @@ public interface ProteinHgvs {
 
     void setPrimaryId(String primaryId);
 
-    VariantLocation convert2Location();
+    VariationLocation convert2Location();
 
     String getWildType();
 
