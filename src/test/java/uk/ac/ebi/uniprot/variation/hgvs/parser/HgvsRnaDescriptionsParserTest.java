@@ -1,22 +1,20 @@
-package uk.ac.ebi.uniprot.variation.hgvs.dna;
+package uk.ac.ebi.uniprot.variation.hgvs.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.regex.Matcher;
-
 import org.junit.Test;
 
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
 
-public class HgvsRnaDescriptionsTest {
+public class HgvsRnaDescriptionsParserTest {
 	@Test
 	public void testParseSubstitutionDescription() {
 		String val = "76a>c";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseSubstitutionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(76, hgvsDescription.getStart().longValue());
 		assertEquals("a", hgvsDescription.getWildType());
@@ -30,7 +28,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testParseDeletionDescriptionSingle() {
 		String val = "7del";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseDeletionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(7, hgvsDescription.getStart().longValue());
 		assertNull(hgvsDescription.getEnd());
@@ -43,7 +41,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testParseDeletionDescriptionMulti() {
 		String val = "6_8del";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseDeletionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(6, hgvsDescription.getStart().longValue());
 		assertEquals(8, hgvsDescription.getEnd().longValue());
@@ -56,7 +54,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testParseDeletionDescriptionMultiPred() {
 		String val = "(4072_5145)del";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseDeletionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(4072, hgvsDescription.getStart().longValue());
 		assertEquals(5145, hgvsDescription.getEnd().longValue());
@@ -69,7 +67,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testDeplicationDescriptionSingle() {
 		String val = "7dup";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseDuplicationDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(7, hgvsDescription.getStart().longValue());
 		assertNull(hgvsDescription.getEnd());
@@ -81,7 +79,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testDeplicationDescriptionMulti() {
 		String val = "6_8dup";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseDuplicationDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(6, hgvsDescription.getStart().longValue());
 		assertEquals(8, hgvsDescription.getEnd().longValue());
@@ -93,7 +91,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testInsertDescription() {
 		String val = "756_757insuacu";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(756, hgvsDescription.getStart().longValue());
 		assertEquals(757, hgvsDescription.getEnd().longValue());
@@ -107,7 +105,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testInsertDescriptionPred() {
 		String val = "(222_226)insg";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(222, hgvsDescription.getStart().longValue());
 		assertEquals(226, hgvsDescription.getEnd().longValue());
@@ -119,7 +117,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testInversionDescription() {
 		String val ="177_180inv";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseInversionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(177, hgvsDescription.getStart().longValue());
 		assertEquals(180, hgvsDescription.getEnd().longValue());
@@ -133,7 +131,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testConversionDescription() {
 		String val="415_1655conAC096506.5:409_1649";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseConversionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(415, hgvsDescription.getStart().longValue());
 		assertEquals(1655, hgvsDescription.getStartCross().longValue());
@@ -147,7 +145,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testDeletionInsertionDescriptionSingle() {
 		String val ="775delinsga";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseDeletionInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(775, hgvsDescription.getStart().longValue());
 		
@@ -161,7 +159,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testDeletionInsertionDescriptionMulti() {
 		String val ="902_909delinsuuu";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseDeletionInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(902, hgvsDescription.getStart().longValue());
 		
@@ -171,20 +169,12 @@ public class HgvsRnaDescriptionsTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());	
 		
-		Matcher matcher = HgvsRnaDescriptions.HGVS_DELETION_INSERTION_PATTERN.matcher(val);
-		if (matcher.matches()) {
-			for (int i = 0; i <= matcher.groupCount(); i++) {
-				System.out.println(i + "\t" + matcher.group(i));
-			}
-
-		} else {
-			System.out.println("Failed");
-		}
+	
 	}
 	@Test
 	public void testRepeatDescription() {
 		String val ="-124_-123[14]";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseRepeatDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(-124, hgvsDescription.getStart().longValue());
 		
@@ -201,7 +191,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testRepeatDescriptionSeqSingle() {
 		String val ="53AGC[19]";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseRepeatDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(53, hgvsDescription.getStart().longValue());
 		
@@ -218,7 +208,7 @@ public class HgvsRnaDescriptionsTest {
 	@Test
 	public void testRepeatDescriptionSeqMulti() {
 		String val ="53_55[31]";
-		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseRepeatDescription(val);
+		HgvsDescription hgvsDescription = HgvsRnaDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(53, hgvsDescription.getStart().longValue());
 		
@@ -231,4 +221,5 @@ public class HgvsRnaDescriptionsTest {
 		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
 
 	}
+
 }

@@ -11,5 +11,6 @@ public enum HgvsType {
     EXTENSION,
     INVERSION,
     INSERTION_INVERSION,
-    CONVERSION;
+    CONVERSION,
+    UNKNOWN;
 }

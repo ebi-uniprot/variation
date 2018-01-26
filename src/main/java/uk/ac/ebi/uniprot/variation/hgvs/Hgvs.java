@@ -5,6 +5,6 @@ import uk.ac.ebi.uniprot.variation.SequenceType;
 public interface Hgvs {
 	String getSequenceId();
 	SequenceType getSequenceType();
-	String getDescription();
+	HgvsDescription getDescription();
 	
 }

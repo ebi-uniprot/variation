@@ -7,22 +7,14 @@ import lombok.Data;
 import uk.ac.ebi.uniprot.variation.SequenceType;
 import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
 import uk.ac.ebi.uniprot.variation.hgvs.Hgvs;
-import uk.ac.ebi.uniprot.variation.hgvs.Hgvss;
+import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
+import uk.ac.ebi.uniprot.variation.hgvs.parser.Hgvss;
 
 @Data
 public class HgvsImpl implements Hgvs {
 	private final String sequenceId;
 	private final SequenceType sequenceType;
-	private final String description;
+	private final HgvsDescription description;
 	
-
-	public static Hgvs from(String hgvsString) {
-		Matcher matcher = Hgvss.HGVS_PATTERN.matcher(hgvsString);
-		if (matcher.matches()) {
-			return new HgvsImpl(matcher.group(1), SequenceType.getType(matcher.group(3)), matcher.group(5));
-		} else {
-			throw new InvalidHgvsException(hgvsString);
-		}
-	}
 
 }

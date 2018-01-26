@@ -1,4 +1,4 @@
-package uk.ac.ebi.uniprot.variation.hgvs.dna;
+package uk.ac.ebi.uniprot.variation.hgvs.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,15 +6,14 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import uk.ac.ebi.uniprot.variation.exception.InvalidadHgvsDescription;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
 
-public class HgvsProteinDescriptionsTest {
+public class HgvsProteinDescriptionParserTest {
 	@Test
 	public void testSubstitutionDescriptionMissense() {
 		String val = "Trp24Cys";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseSubstitutionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(24l, hgvsDescription.getStart().longValue());
 		assertEquals("Trp", hgvsDescription.getWildType());
@@ -27,7 +26,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testSubstitutionDescriptionPred() {
 		String val = "(Trp24Cys)";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseSubstitutionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(24l, hgvsDescription.getStart().longValue());
 		assertEquals("Trp", hgvsDescription.getWildType());
@@ -40,7 +39,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testSubstitutionDescriptionNonsense() {
 		String val = "Trp24*";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseSubstitutionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(24l, hgvsDescription.getStart().longValue());
 		assertEquals("Trp", hgvsDescription.getWildType());
@@ -53,7 +52,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testSubstitutionDescriptionSilent() {
 		String val = "Cys188=";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseSubstitutionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(188l, hgvsDescription.getStart().longValue());
 		assertEquals("Cys", hgvsDescription.getWildType());
@@ -66,7 +65,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testSubstitutionDescriptionUnknow() {
 		String val = "Cys188?";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseSubstitutionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(188l, hgvsDescription.getStart().longValue());
 		assertEquals("Cys", hgvsDescription.getWildType());
@@ -77,17 +76,20 @@ public class HgvsProteinDescriptionsTest {
 
 	}
 
-	@Test(expected = InvalidadHgvsDescription.class)
-	public void testSubstitutionWrong() {
+	@Test
+	public void testUnsupportedHgvsDescriptionWrong() {
 		String val = "33038255C/A";
-		HgvsProteinDescriptions.parseSubstitutionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
+		assertFalse(hgvsDescription.isParsed());
+		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(HgvsType.UNKNOWN, hgvsDescription.getType());
 
 	}
 
 	@Test
 	public void testProteinDeletionSingle() {
 		String val = "Ala3del";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDeletionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
 		assertEquals("Ala", hgvsDescription.getWildType());
@@ -101,7 +103,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDeletionSinglePred() {
 		String val = "(Ala3del)";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDeletionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
 		assertEquals("Ala", hgvsDescription.getWildType());
@@ -114,7 +116,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDeletionMulti() {
 		String val = "Ala3_Ser5del";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDeletionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
 		assertEquals("Ala", hgvsDescription.getWildType());
@@ -128,7 +130,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDeletionMulti2() {
 		String val = "Gly2_Met46del";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDeletionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(2l, hgvsDescription.getStart().longValue());
 		assertEquals("Gly", hgvsDescription.getWildType());
@@ -142,7 +144,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDuplicationSingle() {
 		String val = "Ala3dup";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDuplicationDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
 		assertEquals("Ala", hgvsDescription.getWildType());
@@ -156,7 +158,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDuplicationSinglePred() {
 		String val = "(Ala3dup)";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDuplicationDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
 		assertEquals("Ala", hgvsDescription.getWildType());
@@ -170,7 +172,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDuplicationMulti() {
 		String val = "Ala3_Ser5dup";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDuplicationDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
 		assertEquals("Ala", hgvsDescription.getWildType());
@@ -185,7 +187,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinInsert() {
 		String val = "His4_Gln5insAlaSer";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(4l, hgvsDescription.getStart().longValue());
 		assertEquals("His", hgvsDescription.getWildType());
@@ -201,7 +203,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinInsert2() {
 		String val = "(His4_Gln5insAla)";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(4l, hgvsDescription.getStart().longValue());
 		assertEquals("His", hgvsDescription.getWildType());
@@ -217,7 +219,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinInsertNumber() {
 		String val = "Arg78_Gly79ins23";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(78l, hgvsDescription.getStart().longValue());
 		assertEquals("Arg", hgvsDescription.getWildType());
@@ -235,7 +237,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDeletionInsertSingle() {
 		String val = "Cys28delinsTrpVal";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDeletionInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(28l, hgvsDescription.getStart().longValue());
 		assertEquals("Cys", hgvsDescription.getWildType());
@@ -251,7 +253,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinDeletionInsertMulti() {
 		String val = "Cys28_Lys29delinsTrp";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDeletionInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(28l, hgvsDescription.getStart().longValue());
 		assertEquals("Cys", hgvsDescription.getWildType());
@@ -268,7 +270,7 @@ public class HgvsProteinDescriptionsTest {
 	public void testProteinDeletionInsertMulti2() {
 		String val = "(Glu125_Ala132delinsGlyLeuHisArgPheIleValLeu)";
 
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseDeletionInsertionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(125l, hgvsDescription.getStart().longValue());
 		assertEquals("Glu", hgvsDescription.getWildType());
@@ -283,7 +285,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinRepeatSingle() {
 		String val = "Gln18[23]";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseRepeatDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(18l, hgvsDescription.getStart().longValue());
 		assertEquals("Gln", hgvsDescription.getWildType());
@@ -300,7 +302,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinRepeatMulti() {
 		String val = "Arg65_Ser67[12]";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseRepeatDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(65l, hgvsDescription.getStart().longValue());
 		assertEquals("Arg", hgvsDescription.getWildType());
@@ -316,7 +318,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testRepeatDescriptionNotParsed() {
 		String val = "(Gln18)[(70_80)]";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseRepeatDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 
 		assertEquals(val, hgvsDescription.getDescription());
 		assertFalse(hgvsDescription.isParsed());
@@ -326,7 +328,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinFrameshift() {
 		String val = "Arg97ProfsTer23";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseFrameshiftDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(97l, hgvsDescription.getStart().longValue());
 		assertEquals("Arg", hgvsDescription.getWildType());
@@ -340,7 +342,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinFrameshiftShort() {
 		String val = "Arg97fs";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseFrameshiftDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(97l, hgvsDescription.getStart().longValue());
 		assertEquals("Arg", hgvsDescription.getWildType());
@@ -355,7 +357,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinFrameshift2() {
 		String val = "Pro633Leufs";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseFrameshiftDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(633l, hgvsDescription.getStart().longValue());
 		assertEquals("Pro", hgvsDescription.getWildType());
@@ -370,7 +372,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testProteinFrameshiftPred() {
 		String val = "(Gln151Thrfs*9)";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseFrameshiftDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(151l, hgvsDescription.getStart().longValue());
 		assertEquals("Gln", hgvsDescription.getWildType());
@@ -384,7 +386,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testExtensionMet() {
 		String val = "Met1ext-5";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseExtensionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(1l, hgvsDescription.getStart().longValue());
 		assertEquals("Met", hgvsDescription.getWildType());
@@ -402,7 +404,7 @@ public class HgvsProteinDescriptionsTest {
 	public void testExtensionMet2() {
 		String val = "Met1Valext-12";
 
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseExtensionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(1l, hgvsDescription.getStart().longValue());
 		assertEquals("Met", hgvsDescription.getWildType());
@@ -419,7 +421,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testExtensionTer() {
 		String val = "Ter110Glnext*17";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseExtensionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(110l, hgvsDescription.getStart().longValue());
 		assertEquals("Ter", hgvsDescription.getWildType());
@@ -436,7 +438,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testExtensionTerWithStar() {
 		String val = "*110Glnext*17";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseExtensionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(110l, hgvsDescription.getStart().longValue());
 		assertEquals("*", hgvsDescription.getWildType());
@@ -453,7 +455,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testExtensionLettersTer() {
 		String val = "(Ter315TyrextAsnLysGlyThrTer)";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseExtensionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(315l, hgvsDescription.getStart().longValue());
 		assertEquals("Ter", hgvsDescription.getWildType());
@@ -470,7 +472,7 @@ public class HgvsProteinDescriptionsTest {
 	@Test
 	public void testExtensionLettersTerQuestion() {
 		String val = "Ter327Argext*?";
-		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseExtensionDescription(val);
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(327, hgvsDescription.getStart().longValue());
 		assertEquals("Ter", hgvsDescription.getWildType());
@@ -483,5 +485,4 @@ public class HgvsProteinDescriptionsTest {
 		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
 
 	}
-
 }
