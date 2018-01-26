@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
-import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
+import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
 @Builder(builderClassName = "HgvsDescriptionBuilder")
 @Data
 public class HgvsDescriptionImpl implements HgvsDescription {
@@ -20,7 +20,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	private final Long endCross;
 	private final String secondWildType;
 //	private final Long secondStart;
-	private final HgvsType type;
+	private final VariantType variantType;
 	private final String value;
 	private final boolean parsed;
 	private final String conversionSeqId;

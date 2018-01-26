@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
-import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
+import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
 import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsDescriptionImpl;
 import uk.ac.ebi.uniprot.variation.util.VariationUtil;
 
@@ -69,7 +69,7 @@ public class HgvsProteinDescriptions {
 
 		if (proteinHgvs == null) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			return builder.parsed(false).value(hgvsDescription).type(HgvsType.UNKNOWN).build();
+			return builder.parsed(false).value(hgvsDescription).variantType(VariantType.UNKNOWN).build();
 		} else
 
 			return proteinHgvs;
@@ -84,7 +84,7 @@ public class HgvsProteinDescriptions {
 			.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3)))
 					.varType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(4)))
-					.type(HgvsType.SUBSTITUTION)
+					.variantType(VariantType.SUBSTITUTION)
 					.value(val).parsed(true);
 			return builder.build();
 		} else {
@@ -96,7 +96,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_DELETION_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.DELETION).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.DELETION).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(6) != null) {
@@ -118,7 +118,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_DUPLICATION_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.DUPLICATION).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.DUPLICATION).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(6) != null) {
@@ -139,7 +139,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_INSERTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.INSERTION).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.INSERTION).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3))).parsed(true)
 					.secondWildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(5)))
@@ -163,7 +163,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_DELETION_INSERTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.DELETION_INSERTION).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.DELETION_INSERTION).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			String secondWildType = matcher.group(6);
@@ -185,7 +185,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_REPEAT_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.REPEAT).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.REPEAT).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(7) != null) {
@@ -196,7 +196,7 @@ public class HgvsProteinDescriptions {
 			builder.repeat(repeat);
 			return builder.build();
 		} else {
-			return parsDescriptionBase(val, HgvsProteinDescriptions.HGVS_REPEAT_BASE_PATTERN, HgvsType.REPEAT);
+			return parsDescriptionBase(val, HgvsProteinDescriptions.HGVS_REPEAT_BASE_PATTERN, VariantType.REPEAT);
 		}
 	}
 
@@ -204,7 +204,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_FRAMESHIFT_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.FRAMESHIFT).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.FRAMESHIFT).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(8) != null) {
@@ -235,7 +235,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_EXTENSION_MET_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.EXTENSION).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.EXTENSION).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(6) != null) {
@@ -257,7 +257,7 @@ public class HgvsProteinDescriptions {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_EXTENSION_TER_PATTERN.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			builder.value(val).type(HgvsType.EXTENSION).predicted(matcher.group(1) != null)
+			builder.value(val).variantType(VariantType.EXTENSION).predicted(matcher.group(1) != null)
 					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2))							
 							).start(Long.parseLong(matcher.group(3))).parsed(true);
 
@@ -288,11 +288,11 @@ public class HgvsProteinDescriptions {
 
 	}
 
-	private static HgvsDescription parsDescriptionBase(String val, Pattern pattern, HgvsType type) {
+	private static HgvsDescription parsDescriptionBase(String val, Pattern pattern, VariantType type) {
 		Matcher matcher = pattern.matcher(val);
 		if (matcher.matches()) {
 			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
-			return builder.value(val).type(type).parsed(false).build();
+			return builder.value(val).variantType(type).parsed(false).build();
 		} else {
 			return null;
 		}

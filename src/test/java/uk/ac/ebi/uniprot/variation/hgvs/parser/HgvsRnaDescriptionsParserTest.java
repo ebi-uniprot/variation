@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
-import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
+import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
 
 public class HgvsRnaDescriptionsParserTest {
 	@Test
@@ -21,7 +21,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals("c", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
+		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 
 	}
 
@@ -34,7 +34,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertNull(hgvsDescription.getEnd());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 
 	}
 
@@ -47,7 +47,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals(8, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 
 	}
 
@@ -60,7 +60,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals(5145, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 
 	}
 
@@ -73,7 +73,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertNull(hgvsDescription.getEnd());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
+		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals(8, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
+		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals("uacu", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
+		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());
 	
 	}
 	
@@ -112,7 +112,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals("g", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());	
+		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());	
 	}
 	@Test
 	public void testInversionDescription() {
@@ -123,7 +123,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals(180, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.INVERSION, hgvsDescription.getType());	
+		assertEquals(VariantType.INVERSION, hgvsDescription.getVariantType());	
 		
 		
 	}
@@ -140,7 +140,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals("AC096506.5", hgvsDescription.getConversionSeqId());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.CONVERSION, hgvsDescription.getType());	
+		assertEquals(VariantType.CONVERSION, hgvsDescription.getVariantType());	
 	}
 	@Test
 	public void testDeletionInsertionDescriptionSingle() {
@@ -153,7 +153,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals("ga", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());	
+		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());	
 
 	}
 	@Test
@@ -167,7 +167,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals("uuu", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());	
+		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());	
 		
 	
 	}
@@ -184,7 +184,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals(14, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());	
+		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());	
 	
 	}
 	
@@ -201,7 +201,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals(19, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
+		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());
 		
 	
 	}
@@ -218,7 +218,7 @@ public class HgvsRnaDescriptionsParserTest {
 		assertEquals(31, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
+		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());
 
 	}
 

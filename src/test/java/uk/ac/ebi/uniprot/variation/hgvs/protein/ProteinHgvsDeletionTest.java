@@ -1,7 +1,7 @@
 package uk.ac.ebi.uniprot.variation.hgvs.protein;
 
-import uk.ac.ebi.uniprot.variation.SequenceType;
 import uk.ac.ebi.uniprot.variation.VariationLocation;
+import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
 import uk.ac.ebi.uniprot.variation.hgvs.protein.ProteinHgvs;
 import uk.ac.ebi.uniprot.variation.hgvs.protein.ProteinHgvsType;
 import uk.ac.ebi.uniprot.variation.hgvs.protein.ProteinHgvss;
@@ -127,7 +127,7 @@ public class ProteinHgvsDeletionTest {
         assertNotNull(hgvs);
         VariationLocation location = hgvs.convert2Location();
         assertNotNull(location);
-        assertEquals(SequenceType.PROTEIN, location.getLocationType());
+        assertEquals(HgvsType.PROTEIN, location.getLocationType());
         assertEquals("LRG_199p1", location.getSequenceId());
    
         assertEquals("A", location.getWildType());
@@ -144,7 +144,7 @@ public class ProteinHgvsDeletionTest {
         VariationLocation location = hgvs.convert2Location();
 
         assertNotNull(location);
-        assertEquals(SequenceType.PROTEIN, location.getLocationType());
+        assertEquals(HgvsType.PROTEIN, location.getLocationType());
         assertEquals("LRG_199p1", location.getSequenceId());
    
         assertEquals("A", location.getWildType());

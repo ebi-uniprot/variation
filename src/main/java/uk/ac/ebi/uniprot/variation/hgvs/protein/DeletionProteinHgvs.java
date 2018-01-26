@@ -1,8 +1,8 @@
 package uk.ac.ebi.uniprot.variation.hgvs.protein;
 
 
-import uk.ac.ebi.uniprot.variation.SequenceType;
 import uk.ac.ebi.uniprot.variation.VariationLocation;
+import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
 import uk.ac.ebi.uniprot.variation.impl.VariationLocationImpl;
 import uk.ac.ebi.uniprot.variation.util.VariationUtil;
 
@@ -18,7 +18,7 @@ public class DeletionProteinHgvs extends AbstractProteinHgvs {
     public VariationLocation convert2Location() {
     
         VariationLocationImpl.VariationLocationBuilder builder = VariationLocationImpl.builder();
-        builder.locationType(SequenceType.PROTEIN)
+        builder.locationType(HgvsType.PROTEIN)
                 .sequenceId(this.getSequenceId())
                 .wildType(this.getWildType())
                 .varType(this.getVarType())

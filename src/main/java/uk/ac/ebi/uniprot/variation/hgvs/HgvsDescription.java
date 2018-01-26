@@ -13,7 +13,7 @@ public interface HgvsDescription {
 	Long getEndCross();
 	String getConversionSeqId();
 	String getSecondWildType();
-	HgvsType getType();
+	VariantType getVariantType();
 	String getValue();
 	boolean isParsed();
 	List<Map.Entry<String, Integer> > getRepeats();

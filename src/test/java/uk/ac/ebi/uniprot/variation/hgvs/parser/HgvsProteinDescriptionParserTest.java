@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
-import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
+import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
 
 public class HgvsProteinDescriptionParserTest {
 	@Test
@@ -20,7 +20,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("C", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
+		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -33,7 +33,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("C", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
+		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("-", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
+		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("-", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
+		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("-", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
+		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 
 	}
 
@@ -82,7 +82,7 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(val, hgvsDescription.getValue());
-		assertEquals(HgvsType.UNKNOWN, hgvsDescription.getType());
+		assertEquals(VariantType.UNKNOWN, hgvsDescription.getVariantType());
 
 	}
 
@@ -96,7 +96,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(null, hgvsDescription.getSecondWildType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 
 	}
 
@@ -110,7 +110,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(null, hgvsDescription.getSecondWildType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(5l, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -138,7 +138,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(46l, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -152,7 +152,7 @@ public class HgvsProteinDescriptionParserTest {
 		// assertEquals(46l, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
+		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -166,7 +166,7 @@ public class HgvsProteinDescriptionParserTest {
 		// assertEquals(46l, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
+		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -180,7 +180,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(5l, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
+		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 
 	}
 
@@ -196,7 +196,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("AS", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
+		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());
 
 	}
 
@@ -212,7 +212,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("A", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
+		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());
 
 	}
 
@@ -230,7 +230,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals(23, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
+		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());
 
 	}
 
@@ -246,7 +246,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("WV", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());
 
 	}
 
@@ -262,7 +262,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("W", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());
 
 	}
 
@@ -279,7 +279,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals("GLHRFIVL", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
+		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -295,7 +295,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(23, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
+		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());
 
 	}
 
@@ -312,7 +312,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(12, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
+		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -322,7 +322,7 @@ public class HgvsProteinDescriptionParserTest {
 
 		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
-		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
+		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -336,7 +336,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(23, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
+		assertEquals(VariantType.FRAMESHIFT, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -350,7 +350,7 @@ public class HgvsProteinDescriptionParserTest {
 		// assertEquals(23, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
+		assertEquals(VariantType.FRAMESHIFT, hgvsDescription.getVariantType());
 
 	}
 
@@ -365,7 +365,7 @@ public class HgvsProteinDescriptionParserTest {
 		// assertEquals(23, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
+		assertEquals(VariantType.FRAMESHIFT, hgvsDescription.getVariantType());
 
 	}
 
@@ -380,7 +380,7 @@ public class HgvsProteinDescriptionParserTest {
 		// assertEquals(23, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
+		assertEquals(VariantType.FRAMESHIFT, hgvsDescription.getVariantType());
 	}
 
 	@Test
@@ -396,7 +396,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(-5, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
+		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
 
@@ -414,7 +414,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(-12, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
+		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
 
@@ -431,7 +431,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(17, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
+		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
 
@@ -448,7 +448,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(17, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
+		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
 
@@ -465,7 +465,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(1, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
+		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
 
@@ -482,7 +482,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(-1, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
+		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
 }
