@@ -7,4 +7,5 @@ public interface VariationLocation{
     String getVarType();
     String getWildType();
     String getSequenceId();
+    
 }

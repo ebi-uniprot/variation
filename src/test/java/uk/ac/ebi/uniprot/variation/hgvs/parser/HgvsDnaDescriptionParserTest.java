@@ -21,7 +21,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertEquals(33038255l, hgvsDescription.getStart().longValue());
 		assertEquals("C", hgvsDescription.getWildType());
 		assertEquals("A", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
 
@@ -35,7 +35,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertEquals(33038255l, hgvsDescription.getStart().longValue());
 		assertEquals("C", hgvsDescription.getWildType());
 		assertEquals("A", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
 	}
@@ -44,7 +44,7 @@ public class HgvsDnaDescriptionParserTest {
 	public void testSubstitutionWrong() {
 		String val = "33038255C/A";
 		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.UNKNOWN, hgvsDescription.getType());
 
@@ -58,7 +58,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertNull(hgvsDescription.getEnd());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 
@@ -72,7 +72,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(21, hgvsDescription.getEnd().longValue());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 
@@ -86,7 +86,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(186l, hgvsDescription.getEnd().longValue());
 		assertEquals(48l, hgvsDescription.getEndCross().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 	}
@@ -99,7 +99,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertEquals(1234, hgvsDescription.getStartCross().longValue());
 		assertEquals(5155l, hgvsDescription.getEnd().longValue());
 		assertEquals(246l, hgvsDescription.getEndCross().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 	}
@@ -108,7 +108,7 @@ public class HgvsDnaDescriptionParserTest {
 	public void testParseDeletionDescriptionNotParsed() {
 		String val = "(4071+1_4072-1)_(5154+1_5155-1)del";
 		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 	}
@@ -121,7 +121,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertNull(hgvsDescription.getEnd());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 
@@ -135,7 +135,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(23, hgvsDescription.getEnd().longValue());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 	}
@@ -148,7 +148,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(264, hgvsDescription.getEnd().longValue());
 		assertEquals(48, hgvsDescription.getEndCross().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 	}
@@ -161,7 +161,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertEquals(1234, hgvsDescription.getStartCross().longValue());
 		assertEquals(5155, hgvsDescription.getEnd().longValue());
 		assertEquals(246, hgvsDescription.getEndCross().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 	}
@@ -170,7 +170,7 @@ public class HgvsDnaDescriptionParserTest {
 	public void testParseDuplicationDescriptionNotParsed() {
 		String val = "(4071+1_4072-1)_(5154+1_5155-1)dup";
 		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 	}
@@ -186,7 +186,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getEndCross());
 		assertNull(hgvsDescription.getWildType());
 		assertEquals("CCT", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
 
@@ -196,7 +196,7 @@ public class HgvsDnaDescriptionParserTest {
 	public void testParseInsertionDescriptionNotParsed() {
 		String val = "419_420ins[T;401_419]";
 		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
 	}
@@ -210,7 +210,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(1080l, hgvsDescription.getEnd().longValue());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INVERSION, hgvsDescription.getType());
 
@@ -220,7 +220,7 @@ public class HgvsDnaDescriptionParserTest {
 	public void testParseInversionDescriptionNotParsed() {
 		String val = "122_123ins213_234invinsAins123_211inv";
 		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INSERTION_INVERSION, hgvsDescription.getType());
 	}
@@ -234,7 +234,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertEquals(123, hgvsDescription.getStartCross().longValue());
 		assertEquals(123l, hgvsDescription.getEnd().longValue());
 		assertEquals(234l, hgvsDescription.getEndCross().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INSERTION_INVERSION, hgvsDescription.getType());
 
@@ -244,7 +244,7 @@ public class HgvsDnaDescriptionParserTest {
 	public void testParseInsertionInversionDescriptionNotParsed() {
 		String val = "122_123ins213_234invinsAins123_211inv";
 		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INSERTION_INVERSION, hgvsDescription.getType());
 	}
@@ -258,7 +258,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertEquals(42522669, hgvsDescription.getStartCross().longValue());
 		assertEquals(42536337, hgvsDescription.getEnd().longValue());
 		assertEquals(42536382, hgvsDescription.getEndCross().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.CONVERSION, hgvsDescription.getType());
 
@@ -274,7 +274,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertEquals(17179029, hgvsDescription.getEnd().longValue());
 		assertEquals(17179091, hgvsDescription.getEndCross().longValue());
 		assertEquals("NC_000022.10", hgvsDescription.getConversionSeqId());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.CONVERSION, hgvsDescription.getType());
 	}
@@ -288,7 +288,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(6775, hgvsDescription.getEnd().longValue());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
 		assertEquals("GA", hgvsDescription.getVarType());
@@ -304,7 +304,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(144, hgvsDescription.getEnd().longValue());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
 		assertEquals("TGG", hgvsDescription.getVarType());
@@ -320,7 +320,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertNull(hgvsDescription.getEnd());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
 		assertEquals(1, hgvsDescription.getRepeats().size());
@@ -338,7 +338,7 @@ public class HgvsDnaDescriptionParserTest {
 		assertNull(hgvsDescription.getStartCross());
 		assertEquals(112036823, hgvsDescription.getEnd().longValue());
 		assertNull(hgvsDescription.getEndCross());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
 		assertEquals(3, hgvsDescription.getRepeats().size());
@@ -379,7 +379,7 @@ public class HgvsDnaDescriptionParserTest {
 	public void testParseRepeatDescriptionNotParsed() {
 		String val ="NM_002024.5:c.-128(GGC)[(600_800)]";
 		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
 	}

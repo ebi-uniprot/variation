@@ -48,6 +48,6 @@ public class HgvssTest {
 	private void verify(Hgvs hgvs, String seqId, SequenceType seqType, String description) {
 		assertEquals(seqId, hgvs.getSequenceId());
 		assertEquals(seqType, hgvs.getSequenceType());
-		assertEquals(description, hgvs.getDescription().getDescription());
+		assertEquals(description, hgvs.getDescription().getValue());
 	}
 }

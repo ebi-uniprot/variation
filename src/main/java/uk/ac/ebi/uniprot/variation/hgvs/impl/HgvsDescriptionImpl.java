@@ -21,7 +21,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	private final String secondWildType;
 //	private final Long secondStart;
 	private final HgvsType type;
-	private final String description;
+	private final String value;
 	private final boolean parsed;
 	private final String conversionSeqId;
 	private @Singular final List<Map.Entry<String, Integer> > repeats;

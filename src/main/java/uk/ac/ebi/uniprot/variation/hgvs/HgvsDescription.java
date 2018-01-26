@@ -14,8 +14,7 @@ public interface HgvsDescription {
 	String getConversionSeqId();
 	String getSecondWildType();
 	HgvsType getType();
-	String getDescription();
+	String getValue();
 	boolean isParsed();
 	List<Map.Entry<String, Integer> > getRepeats();
-	
 }

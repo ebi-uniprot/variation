@@ -16,9 +16,9 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(24l, hgvsDescription.getStart().longValue());
-		assertEquals("Trp", hgvsDescription.getWildType());
-		assertEquals("Cys", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("W", hgvsDescription.getWildType());
+		assertEquals("C", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
 	}
@@ -29,9 +29,9 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(24l, hgvsDescription.getStart().longValue());
-		assertEquals("Trp", hgvsDescription.getWildType());
-		assertEquals("Cys", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("W", hgvsDescription.getWildType());
+		assertEquals("C", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
 	}
@@ -42,9 +42,9 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(24l, hgvsDescription.getStart().longValue());
-		assertEquals("Trp", hgvsDescription.getWildType());
-		assertEquals("*", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("W", hgvsDescription.getWildType());
+		assertEquals("-", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
 	}
@@ -55,9 +55,9 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(188l, hgvsDescription.getStart().longValue());
-		assertEquals("Cys", hgvsDescription.getWildType());
-		assertEquals("=", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("C", hgvsDescription.getWildType());
+		assertEquals("-", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
 	}
@@ -68,9 +68,9 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(188l, hgvsDescription.getStart().longValue());
-		assertEquals("Cys", hgvsDescription.getWildType());
-		assertEquals("?", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("C", hgvsDescription.getWildType());
+		assertEquals("-", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.SUBSTITUTION, hgvsDescription.getType());
 
@@ -81,7 +81,7 @@ public class HgvsProteinDescriptionParserTest {
 		String val = "33038255C/A";
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isParsed());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertEquals(HgvsType.UNKNOWN, hgvsDescription.getType());
 
 	}
@@ -92,9 +92,9 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
-		assertEquals("Ala", hgvsDescription.getWildType());
+		assertEquals("A", hgvsDescription.getWildType());
 		assertEquals(null, hgvsDescription.getSecondWildType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 
@@ -106,9 +106,9 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
-		assertEquals("Ala", hgvsDescription.getWildType());
+		assertEquals("A", hgvsDescription.getWildType());
 		assertEquals(null, hgvsDescription.getSecondWildType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 	}
@@ -119,10 +119,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
-		assertEquals("Ala", hgvsDescription.getWildType());
-		assertEquals("Ser", hgvsDescription.getSecondWildType());
+		assertEquals("A", hgvsDescription.getWildType());
+		assertEquals("S", hgvsDescription.getSecondWildType());
 		assertEquals(5l, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 	}
@@ -133,10 +133,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(2l, hgvsDescription.getStart().longValue());
-		assertEquals("Gly", hgvsDescription.getWildType());
-		assertEquals("Met", hgvsDescription.getSecondWildType());
+		assertEquals("G", hgvsDescription.getWildType());
+		assertEquals("M", hgvsDescription.getSecondWildType());
 		assertEquals(46l, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION, hgvsDescription.getType());
 	}
@@ -147,10 +147,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
-		assertEquals("Ala", hgvsDescription.getWildType());
+		assertEquals("A", hgvsDescription.getWildType());
 		assertEquals(null, hgvsDescription.getSecondWildType());
 		// assertEquals(46l, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 	}
@@ -161,10 +161,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
-		assertEquals("Ala", hgvsDescription.getWildType());
+		assertEquals("A", hgvsDescription.getWildType());
 		assertEquals(null, hgvsDescription.getSecondWildType());
 		// assertEquals(46l, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 	}
@@ -175,10 +175,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(3l, hgvsDescription.getStart().longValue());
-		assertEquals("Ala", hgvsDescription.getWildType());
-		assertEquals("Ser", hgvsDescription.getSecondWildType());
+		assertEquals("A", hgvsDescription.getWildType());
+		assertEquals("S", hgvsDescription.getSecondWildType());
 		assertEquals(5l, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DUPLICATION, hgvsDescription.getType());
 
@@ -190,11 +190,11 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(4l, hgvsDescription.getStart().longValue());
-		assertEquals("His", hgvsDescription.getWildType());
-		assertEquals("Gln", hgvsDescription.getSecondWildType());
+		assertEquals("H", hgvsDescription.getWildType());
+		assertEquals("Q", hgvsDescription.getSecondWildType());
 		assertEquals(5l, hgvsDescription.getEnd().longValue());
-		assertEquals("AlaSer", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("AS", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
 
@@ -206,11 +206,11 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(4l, hgvsDescription.getStart().longValue());
-		assertEquals("His", hgvsDescription.getWildType());
-		assertEquals("Gln", hgvsDescription.getSecondWildType());
+		assertEquals("H", hgvsDescription.getWildType());
+		assertEquals("Q", hgvsDescription.getSecondWildType());
 		assertEquals(5l, hgvsDescription.getEnd().longValue());
-		assertEquals("Ala", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("A", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.INSERTION, hgvsDescription.getType());
 
@@ -222,11 +222,11 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(78l, hgvsDescription.getStart().longValue());
-		assertEquals("Arg", hgvsDescription.getWildType());
-		assertEquals("Gly", hgvsDescription.getSecondWildType());
+		assertEquals("R", hgvsDescription.getWildType());
+		assertEquals("G", hgvsDescription.getSecondWildType());
 		assertEquals(79l, hgvsDescription.getEnd().longValue());
 		assertEquals(null, hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals(23, hgvsDescription.getRepeats().get(0).getValue().intValue());
 		assertTrue(hgvsDescription.isParsed());
@@ -240,11 +240,11 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(28l, hgvsDescription.getStart().longValue());
-		assertEquals("Cys", hgvsDescription.getWildType());
+		assertEquals("C", hgvsDescription.getWildType());
 		// assertEquals("Gly", hgvsDescription.getSecondWildType());
 		// assertEquals(79l, hgvsDescription.getEnd().longValue());
-		assertEquals("TrpVal", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("WV", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
 
@@ -256,11 +256,11 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(28l, hgvsDescription.getStart().longValue());
-		assertEquals("Cys", hgvsDescription.getWildType());
-		assertEquals("Lys", hgvsDescription.getSecondWildType());
+		assertEquals("C", hgvsDescription.getWildType());
+		assertEquals("K", hgvsDescription.getSecondWildType());
 		assertEquals(29l, hgvsDescription.getEnd().longValue());
-		assertEquals("Trp", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("W", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
 
@@ -273,11 +273,11 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(125l, hgvsDescription.getStart().longValue());
-		assertEquals("Glu", hgvsDescription.getWildType());
-		assertEquals("Ala", hgvsDescription.getSecondWildType());
+		assertEquals("E", hgvsDescription.getWildType());
+		assertEquals("A", hgvsDescription.getSecondWildType());
 		assertEquals(132l, hgvsDescription.getEnd().longValue());
-		assertEquals("GlyLeuHisArgPheIleValLeu", hgvsDescription.getVarType());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals("GLHRFIVL", hgvsDescription.getVarType());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.DELETION_INSERTION, hgvsDescription.getType());
 	}
@@ -288,12 +288,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(18l, hgvsDescription.getStart().longValue());
-		assertEquals("Gln", hgvsDescription.getWildType());
+		assertEquals("Q", hgvsDescription.getWildType());
 		assertEquals(null, hgvsDescription.getSecondWildType());
 		assertEquals(null, hgvsDescription.getEnd());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals(23, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
 
@@ -305,12 +305,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(65l, hgvsDescription.getStart().longValue());
-		assertEquals("Arg", hgvsDescription.getWildType());
-		assertEquals("Ser", hgvsDescription.getSecondWildType());
+		assertEquals("R", hgvsDescription.getWildType());
+		assertEquals("S", hgvsDescription.getSecondWildType());
 		assertEquals(67, hgvsDescription.getEnd().longValue());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals(12, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
 	}
@@ -320,7 +320,7 @@ public class HgvsProteinDescriptionParserTest {
 		String val = "(Gln18)[(70_80)]";
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertFalse(hgvsDescription.isParsed());
 		assertEquals(HgvsType.REPEAT, hgvsDescription.getType());
 	}
@@ -331,10 +331,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(97l, hgvsDescription.getStart().longValue());
-		assertEquals("Arg", hgvsDescription.getWildType());
-		assertEquals("Pro", hgvsDescription.getVarType());
+		assertEquals("R", hgvsDescription.getWildType());
+		assertEquals("P", hgvsDescription.getVarType());
 		assertEquals(23, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
 	}
@@ -345,10 +345,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(97l, hgvsDescription.getStart().longValue());
-		assertEquals("Arg", hgvsDescription.getWildType());
+		assertEquals("R", hgvsDescription.getWildType());
 		assertEquals("*", hgvsDescription.getVarType());
 		// assertEquals(23, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
 
@@ -360,10 +360,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(633l, hgvsDescription.getStart().longValue());
-		assertEquals("Pro", hgvsDescription.getWildType());
-		assertEquals("Leu", hgvsDescription.getVarType());
+		assertEquals("P", hgvsDescription.getWildType());
+		assertEquals("L", hgvsDescription.getVarType());
 		// assertEquals(23, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
 
@@ -375,10 +375,10 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(151l, hgvsDescription.getStart().longValue());
-		assertEquals("Gln", hgvsDescription.getWildType());
-		assertEquals("Thr", hgvsDescription.getVarType());
+		assertEquals("Q", hgvsDescription.getWildType());
+		assertEquals("T", hgvsDescription.getVarType());
 		// assertEquals(23, hgvsDescription.getEnd().longValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.FRAMESHIFT, hgvsDescription.getType());
 	}
@@ -389,12 +389,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(1l, hgvsDescription.getStart().longValue());
-		assertEquals("Met", hgvsDescription.getWildType());
+		assertEquals("M", hgvsDescription.getWildType());
 		assertEquals("?", hgvsDescription.getVarType());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals("*", hgvsDescription.getRepeats().get(0).getKey());
 		assertEquals(-5, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
 
@@ -407,12 +407,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(1l, hgvsDescription.getStart().longValue());
-		assertEquals("Met", hgvsDescription.getWildType());
-		assertEquals("Val", hgvsDescription.getVarType());
+		assertEquals("M", hgvsDescription.getWildType());
+		assertEquals("V", hgvsDescription.getVarType());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals("*", hgvsDescription.getRepeats().get(0).getKey());
 		assertEquals(-12, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
 
@@ -424,12 +424,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(110l, hgvsDescription.getStart().longValue());
-		assertEquals("Ter", hgvsDescription.getWildType());
-		assertEquals("Gln", hgvsDescription.getVarType());
+		assertEquals("*", hgvsDescription.getWildType());
+		assertEquals("Q", hgvsDescription.getVarType());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals("*", hgvsDescription.getRepeats().get(0).getKey());
 		assertEquals(17, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
 
@@ -441,12 +441,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(110l, hgvsDescription.getStart().longValue());
-		assertEquals("*", hgvsDescription.getWildType());
-		assertEquals("Gln", hgvsDescription.getVarType());
+		assertEquals("-", hgvsDescription.getWildType());
+		assertEquals("Q", hgvsDescription.getVarType());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals("*", hgvsDescription.getRepeats().get(0).getKey());
 		assertEquals(17, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
 
@@ -458,12 +458,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertTrue(hgvsDescription.isPredicted());
 		assertEquals(315l, hgvsDescription.getStart().longValue());
-		assertEquals("Ter", hgvsDescription.getWildType());
-		assertEquals("Tyr", hgvsDescription.getVarType());
+		assertEquals("*", hgvsDescription.getWildType());
+		assertEquals("Y", hgvsDescription.getVarType());
 		assertEquals(1, hgvsDescription.getRepeats().size());
-		assertEquals("AsnLysGlyThr", hgvsDescription.getRepeats().get(0).getKey());
+		assertEquals("NKGT", hgvsDescription.getRepeats().get(0).getKey());
 		assertEquals(1, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
 
@@ -475,12 +475,12 @@ public class HgvsProteinDescriptionParserTest {
 		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(327, hgvsDescription.getStart().longValue());
-		assertEquals("Ter", hgvsDescription.getWildType());
-		assertEquals("Arg", hgvsDescription.getVarType());
+		assertEquals("*", hgvsDescription.getWildType());
+		assertEquals("R", hgvsDescription.getVarType());
 		assertEquals(1, hgvsDescription.getRepeats().size());
 		assertEquals("*", hgvsDescription.getRepeats().get(0).getKey());
 		assertEquals(-1, hgvsDescription.getRepeats().get(0).getValue().intValue());
-		assertEquals(val, hgvsDescription.getDescription());
+		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(HgvsType.EXTENSION, hgvsDescription.getType());
 
