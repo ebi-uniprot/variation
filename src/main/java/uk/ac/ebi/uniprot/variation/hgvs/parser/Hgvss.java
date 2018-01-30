@@ -13,7 +13,7 @@ import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsImpl;
 import uk.ac.ebi.uniprot.variation.impl.VariationLocationImpl;
 
 public final class Hgvss {
-	public final static String HGVS = "([\\w.]+)(\\:)([cgmnpr])(\\.)(.+)"; // ENSMUST00000082421.1:c.115G>A;
+	public final static String HGVS = "([\\w.-]+)(\\:)([cgmnpr])(\\.)(.+)"; // ENSMUST00000082421.1:c.115G>A;
 	public final static Pattern HGVS_PATTERN = Pattern.compile(HGVS);
 
 	public static Hgvs from(String hgvsString) {
