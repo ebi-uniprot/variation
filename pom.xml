@@ -72,5 +72,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<version>2018.3-SNAPSHOT</version>
+	<version>2018.2-SNAPSHOT</version>
 </project>
