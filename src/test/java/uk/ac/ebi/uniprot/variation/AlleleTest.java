@@ -3,6 +3,7 @@ package uk.ac.ebi.uniprot.variation;
 import org.junit.Test;
 
 import uk.ac.ebi.uniprot.variation.Allele;
+import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
 
 import static org.junit.Assert.*;
 
@@ -77,7 +78,7 @@ public class AlleleTest {
     }
     
 
-    @Test
+    @Test(expected=InvalidHgvsException.class)
     public void testAlleleFromHgvsWrong() {
         String genomeHgvs = "NC_000081.6.82616099C>A";
         Allele allele = Allele.fromHgvs(genomeHgvs);

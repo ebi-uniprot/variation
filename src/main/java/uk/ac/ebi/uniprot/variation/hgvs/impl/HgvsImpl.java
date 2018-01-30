@@ -7,8 +7,8 @@ import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
 
 @Data
 public class HgvsImpl implements Hgvs {
+	private final HgvsType type;
 	private final String sequenceId;
-	private final HgvsType hgvsType;
 	private final HgvsDescription description;
 	
 

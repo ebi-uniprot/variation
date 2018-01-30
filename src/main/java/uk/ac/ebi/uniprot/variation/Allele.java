@@ -3,10 +3,12 @@ package uk.ac.ebi.uniprot.variation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
-import uk.ac.ebi.uniprot.variation.hgvs.protein.ProteinHgvss;
+import uk.ac.ebi.uniprot.variation.hgvs.Hgvs;
+import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
+import uk.ac.ebi.uniprot.variation.hgvs.parser.Hgvss;
+
 
 public class Allele {
 	private static final String DELIMITER = "/";
@@ -14,16 +16,11 @@ public class Allele {
 	private final List<String> varType;
 
 	public static Allele fromHgvs(String genomeHgvs) {
-		if (genomeHgvs != null) {
-			Matcher matcher = ProteinHgvss.HGVS_BASE_PATTERN.matcher(genomeHgvs);
-			if (matcher.matches()) {
-				String val = matcher.group(5);
-				Matcher matcher2 = ProteinHgvss.HGVS_SUBSTITUTION_PATTERN.matcher(val);
-				if (matcher2.matches()) {
-					String wild = matcher2.group(2);
-					String var = matcher2.group(4);
-					return new Allele(wild, var);
-				}
+		if ((genomeHgvs != null) && !genomeHgvs.isEmpty()){
+			Hgvs hgvs =Hgvss.from(genomeHgvs);
+			if(hgvs.getDescription().getVariantType()  ==VariantType.SUBSTITUTION) {
+				return new Allele(hgvs.getDescription().getWildType(), 
+						hgvs.getDescription().getVarType());
 			}
 		}
 		return null;

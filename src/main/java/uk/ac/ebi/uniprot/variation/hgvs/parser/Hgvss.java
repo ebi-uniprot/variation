@@ -22,7 +22,7 @@ public final class Hgvss {
 			String sequenceId = matcher.group(1);
 			HgvsType seqType = HgvsType.getType(matcher.group(3));
 			String description = matcher.group(5);
-			return new HgvsImpl(sequenceId, seqType, parseDescription(seqType, description));
+			return new HgvsImpl( seqType, sequenceId,  parseDescription(seqType, description));
 		} else {
 			throw new InvalidHgvsException(hgvsString + " cannot be parsed");
 		}
@@ -33,7 +33,7 @@ public final class Hgvss {
 			throw new InvalidadHgvsDescription("invalid hgvs description: "+ hgvs.getDescription().getValue());
 		}
 		 VariationLocationImpl.VariationLocationBuilder builder = VariationLocationImpl.builder();
-	        builder.locationType(hgvs.getHgvsType())
+	        builder.locationType(hgvs.getType())
 	                .sequenceId(hgvs.getSequenceId())
 	                .wildType(hgvs.getDescription().getWildType())
 	                .varType(hgvs.getDescription().getVarType())
@@ -45,7 +45,7 @@ public final class Hgvss {
 	        }
 	        return builder.build();
 	}
-	private static HgvsDescription parseDescription(HgvsType type, String description) {
+	public static HgvsDescription parseDescription(HgvsType type, String description) {
 		switch (type) {
 		case GENOME:
 		case CDNA:

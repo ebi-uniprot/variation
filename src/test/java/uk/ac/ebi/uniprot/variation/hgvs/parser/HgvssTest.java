@@ -47,7 +47,7 @@ public class HgvssTest {
 
 	private void verify(Hgvs hgvs, String seqId, HgvsType seqType, String description) {
 		assertEquals(seqId, hgvs.getSequenceId());
-		assertEquals(seqType, hgvs.getHgvsType());
+		assertEquals(seqType, hgvs.getType());
 		assertEquals(description, hgvs.getDescription().getValue());
 	}
 }
