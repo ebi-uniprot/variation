@@ -5,5 +5,6 @@ public interface Hgvs {
 	HgvsType getType();
 	String getSequenceId();
 	HgvsDescription getDescription();
+	String getValue();
 	
 }

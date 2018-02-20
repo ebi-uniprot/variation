@@ -22,7 +22,7 @@ public final class Hgvss {
 			String sequenceId = matcher.group(1);
 			HgvsType seqType = HgvsType.getType(matcher.group(3));
 			String description = matcher.group(5);
-			return new HgvsImpl( seqType, sequenceId,  parseDescription(seqType, description));
+			return new HgvsImpl(hgvsString, seqType, sequenceId,  parseDescription(seqType, description));
 		} else {
 			throw new InvalidHgvsException(hgvsString + " cannot be parsed");
 		}

@@ -1,5 +1,7 @@
 package uk.ac.ebi.uniprot.variation.util;
 
+import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
+
 public class VariationUtil {
     
     private static final String DEL2 = "Del";
@@ -24,7 +26,14 @@ public class VariationUtil {
                 sb.append(aminoAcid.getOneLetterCode());
             }
             start = end;
+            if(start>=aa.length()) {
+            		break;
+            }
             end += 3;
+            if(end> aa.length()) {
+            	throw new InvalidHgvsException(aa + " is not proper hreeLetterAminoAcid");
+           
+            }
         }
         return sb.toString();
     }

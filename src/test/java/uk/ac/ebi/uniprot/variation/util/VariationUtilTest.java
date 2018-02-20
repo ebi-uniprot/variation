@@ -2,6 +2,8 @@ package uk.ac.ebi.uniprot.variation.util;
 
 import org.junit.Test;
 
+import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
+
 import static org.junit.Assert.*;
 
 public class VariationUtilTest {
@@ -37,6 +39,11 @@ public class VariationUtilTest {
         String converted =VariationUtil.convertThreeLetterAminoAcid2OneLetter(data);
         assertEquals("GLHRFIVL", converted);
     }
-
+    @Test(expected =InvalidHgvsException.class)
+    public void testConvert3letter2oneLetterWrong(){
+        String data ="LysAc";
+        String converted =VariationUtil.convertThreeLetterAminoAcid2OneLetter(data);
+        assertEquals("K", converted);
+    }
 
 }
