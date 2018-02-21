@@ -7,11 +7,16 @@ import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
 
 @Data
 public class HgvsImpl implements Hgvs {
-	private final String value;
 	private final HgvsType type;
 	private final String sequenceId;
 	private final HgvsDescription description;
 
-	
-
+	@Override
+	public String toString() {
+		return  sequenceId + ":" +type.getId() +"."+ description.getValue();
+	}
+	@Override
+	public String getValue() {
+		return toString();
+	}
 }
