@@ -140,6 +140,20 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
+	
+	@Test
+	public void testProteinDeletionMulti3() {
+		String val = "Thr839_Lys862del";
+		HgvsDescription hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val);
+		assertFalse(hgvsDescription.isPredicted());
+		assertEquals(839l, hgvsDescription.getStart().longValue());
+		assertEquals("T", hgvsDescription.getWildType());
+		assertEquals("K", hgvsDescription.getSecondWildType());
+		assertEquals(862l, hgvsDescription.getEnd().longValue());
+		assertEquals(val, hgvsDescription.getValue());
+		assertTrue(hgvsDescription.isParsed());
+		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
+	}
 
 	@Test
 	public void testProteinDuplicationSingle() {
