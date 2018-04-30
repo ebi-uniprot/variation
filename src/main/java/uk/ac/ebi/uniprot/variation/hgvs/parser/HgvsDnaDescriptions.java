@@ -90,13 +90,13 @@ public class HgvsDnaDescriptions {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_SUBSTITUTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
 
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.predicted(matcher.group(1) != null).start(Long.parseLong(matcher.group(2)))
 					.wildType(matcher.group(3)).varType(matcher.group(5)).variantType(VariantType.SUBSTITUTION).value(val)
 					.parsed(true);
 			return builder.build();
 		} else {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			return builder.value(val).variantType(VariantType.UNKNOWN).parsed(false).build();
 		}
 	}
@@ -104,7 +104,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseDeletionDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_DELETION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.DELETION).start(Long.parseLong(matcher.group(1))).parsed(true);
 			if (matcher.group(4) != null) {
 				builder.startCross(Long.parseLong(matcher.group(4)));
@@ -125,7 +125,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseDuplicationDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_DUPLICATION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.DUPLICATION).start(Long.parseLong(matcher.group(1))).parsed(true);
 			if (matcher.group(4) != null) {
 				builder.startCross(Long.parseLong(matcher.group(4)));
@@ -147,7 +147,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseInsertionDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_INSERTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.INSERTION).start(Long.parseLong(matcher.group(1))).parsed(true)
 					.end(Long.parseLong(matcher.group(3))).varType(matcher.group(4));
 			return builder.build();
@@ -159,7 +159,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseInversionDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_INVERSION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.INVERSION).start(Long.parseLong(matcher.group(1))).parsed(true)
 					.end(Long.parseLong(matcher.group(3)));
 			return builder.build();
@@ -171,7 +171,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseInsertionInversionDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_INSERTION_INVERSION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.INSERTION_INVERSION).start(Long.parseLong(matcher.group(1)))
 					.parsed(true).startCross(Long.parseLong(matcher.group(3))).end(Long.parseLong(matcher.group(4)))
 					.endCross(Long.parseLong(matcher.group(6)));
@@ -185,7 +185,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseConversionDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_CONVERSION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.CONVERSION).start(Long.parseLong(matcher.group(1))).parsed(true)
 					.startCross(Long.parseLong(matcher.group(3))).end(Long.parseLong(matcher.group(7)))
 					.endCross(Long.parseLong(matcher.group(9)));
@@ -201,7 +201,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseDeletionInsertionDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_DELETION_INSERTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.DELETION_INSERTION).start(Long.parseLong(matcher.group(1)))
 					.parsed(true).varType(matcher.group(5));
 			if (matcher.group(4) != null) {
@@ -220,7 +220,7 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parseRepeatDescription(String val) {
 		Matcher matcher = HgvsDnaDescriptions.HGVS_REPEAT_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.value(val).variantType(VariantType.REPEAT).start(Long.parseLong(matcher.group(1))).parsed(true);
 			if (matcher.group(4) != null) {
 				builder.end(Long.parseLong(matcher.group(4)));
@@ -248,10 +248,10 @@ public class HgvsDnaDescriptions {
 	private static HgvsDescription parsDescriptionBase(String val, Pattern pattern, VariantType type) {
 		Matcher matcher = pattern.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			return builder.value(val).variantType(type).parsed(false).build();
 		} else {
-			HgvsDescriptionImpl.HgvsDescriptionBuilder builder = HgvsDescriptionImpl.builder();
+			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			return builder.value(val).variantType(VariantType.UNKNOWN).parsed(false).build();
 		}
 	}

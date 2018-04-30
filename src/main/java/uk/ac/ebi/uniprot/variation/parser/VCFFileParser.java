@@ -17,7 +17,7 @@ public final class VCFFileParser {
 
     public static VariantCallFormat parseVCFLine(String data) {
         String[] tokens = data.split(TAB);
-        VariantCallFormatImpl.VariantCallFormatBuilder builder = VariantCallFormatImpl.builder();
+        VariantCallFormatImpl.Builder builder = VariantCallFormatImpl.builder();
         builder.chromosome(transform(tokens[0]))
                 .position(Integer.parseInt(tokens[1]))
                 .id(transform(tokens[2]))
