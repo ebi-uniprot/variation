@@ -6,7 +6,7 @@
 		<version>1.0</version>
 		<relativePath>../uniprot-ujdk-parent</relativePath>
 	</parent>
-	<version>2018.7.9-SNAPSHOT</version>
+	<version>2018.7-SNAPSHOT</version>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>variation-common</artifactId>
 	<name>variation-common</name>
@@ -64,28 +64,28 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
-				<configuration>
-					<release>9</release>
-				</configuration>
+<!-- 				<configuration> -->
+<!-- 					<release>9</release> -->
+<!-- 				</configuration> -->
 			</plugin>
-			<plugin>
-				<artifactId>maven-toolchains-plugin</artifactId>
-				<configuration>
-					<toolchains>
-						<jdk>
-							<version>1.9</version>
-							<vendor>oracle</vendor>
-						</jdk>
-					</toolchains>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>toolchain</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<artifactId>maven-toolchains-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<toolchains> -->
+<!-- 						<jdk> -->
+<!-- 							<version>1.9</version> -->
+<!-- 							<vendor>oracle</vendor> -->
+<!-- 						</jdk> -->
+<!-- 					</toolchains> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<goals> -->
+<!-- 							<goal>toolchain</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 
