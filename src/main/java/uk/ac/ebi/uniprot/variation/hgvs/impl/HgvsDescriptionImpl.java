@@ -27,10 +27,18 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	private final boolean parsed;
 	private final String conversionSeqId;
 	private final List<Map.Entry<String, Integer> > repeats;
-	public static Builder builder() {
-		return new Builder();
+	
+	/*public static <HgvsDescriptionImpl> Builder<HgvsDescriptionImpl> builder() {
+		return new Builder<HgvsDescriptionImpl>();
+	}*/
+	
+	
+	public static Builder<?> builder() {
+		return new Builder<>();
 	}
-	private HgvsDescriptionImpl(Builder builder) {
+	
+	
+	protected HgvsDescriptionImpl(Builder<?> builder) {
 		this.predicted =builder.predicted;
 		this.wildType= builder.wildType;
 		this.varType = builder.varType;
@@ -47,7 +55,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 		this.repeats.addAll(builder.repeats);
 	}
 	
-	public static class Builder {
+	public static class Builder<T extends Builder<T>> {
 		private  boolean predicted;
 		private String wildType;
 		private String varType;
@@ -61,66 +69,70 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 		private boolean parsed;
 		private String conversionSeqId;
 		private List<Map.Entry<String, Integer> > repeats =new ArrayList<>();
+
 		
 		public HgvsDescription build() {
 			return new HgvsDescriptionImpl(this);
 		}
-		public Builder predicted(boolean predicted) {
+		public Builder<T> predicted(boolean predicted) {
 			this.predicted =predicted;
 			return this;
 		}
-		public Builder wildType(String wildType) {
+		public Builder<T> wildType(String wildType) {
 			this.wildType =wildType;
 			return this;
 		}
-		public Builder varType(String varType) {
+		public Builder<T> varType(String varType) {
 			this.varType =varType;
 			return this;
 		}
-		public Builder start(Long start) {
+		public Builder<T> start(Long start) {
 			this.start =start;
 			return this;
 		}
-		public Builder startCross(Long startCross) {
+		public Builder<T> startCross(Long startCross) {
 			this.startCross =startCross;
 			return this;
 		}
-		public Builder end(Long end) {
+		public Builder<T> end(Long end) {
 			this.end =end;
 			return this;
 		}
-		public Builder endCross(Long endCross) {
+		public Builder<T> endCross(Long endCross) {
 			this.endCross =endCross;
 			return this;
 		}
 		
 		
-		public Builder secondWildType(String secondWildType) {
+		public Builder<T> secondWildType(String secondWildType) {
 			this.secondWildType =secondWildType;
 			return this;
 		}
-		public Builder variantType(VariantType variantType) {
+		public Builder<T> variantType(VariantType variantType) {
 			this.variantType =variantType;
 			return this;
 		}
-		public Builder value(String value) {
+		public Builder<T> value(String value) {
 			this.value =value;
 			return this;
 		}
 	
-		public Builder parsed(boolean parsed) {
+		public Builder<T> parsed(boolean parsed) {
 			this.parsed =parsed;
 			return this;
 		}
-		public Builder conversionSeqId(String conversionSeqId) {
+		public Builder<T> conversionSeqId(String conversionSeqId) {
 			this.conversionSeqId =conversionSeqId;
 			return this;
 		}
 	
-		public Builder repeat(Map.Entry<String, Integer> repeat) {
+		public Builder<T> repeat(Map.Entry<String, Integer> repeat) {
 			this.repeats.add(repeat);
 			return this;
 		}
+		
+		
+		
 	}
 	
 	@Override
@@ -175,5 +187,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	public List<Entry<String, Integer>> getRepeats() {
 		return repeats;
 	}
+	
+	
 	
 }

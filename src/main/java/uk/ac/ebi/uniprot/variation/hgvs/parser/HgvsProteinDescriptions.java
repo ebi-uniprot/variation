@@ -2,17 +2,19 @@ package uk.ac.ebi.uniprot.variation.hgvs.parser;
 
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
+
+import uk.ac.ebi.uniprot.variation.hgvs.HgvsProteinDescripton;
 import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
-import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsDescriptionImpl;
+import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsProteinDescriptionImpl;
 import uk.ac.ebi.uniprot.variation.util.VariationUtil;
 
 public class HgvsProteinDescriptions {
 	public final static Pattern HGVS_SUBSTITUTION_PATTERN = Pattern
-			.compile("(\\()?([a-zA-Z]+)(\\d+)([a-zA-Z*=\\?]+)(\\))?");
+			.compile("(\\()?([a-zA-Z*]+)(\\d+)([a-zA-Z*=\\?]+)(\\))?");
 
 	public final static Pattern HGVS_DELETION_PATTERN = Pattern
 			.compile("(\\()?([a-zA-Z]+)(\\d+)((_)([a-zA-Z]+)(\\d+))?(del)(\\))?");
@@ -21,10 +23,10 @@ public class HgvsProteinDescriptions {
 			.compile("(\\()?([a-zA-Z]+)(\\d+)((_)([a-zA-Z]+)(\\d+))?(dup)(\\))?");
 
 	public final static Pattern HGVS_INSERTION_PATTERN = Pattern
-			.compile("(\\()?([a-zA-Z]+)(\\d+)(_)([a-zA-Z]+)(\\d+)(ins)([a-zA-Z]+)?(\\d+)?(\\))?");
+			.compile("(\\()?([a-zA-Z*]+)(\\d+)(_)([a-zA-Z*]+)(\\d+)(ins)([a-zA-Z*]+)?(\\d+)?(\\))?");
 
 	public final static Pattern HGVS_DELETION_INSERTION_PATTERN = Pattern
-			.compile("(\\()?([a-zA-Z]+)(\\d+)((_)([a-zA-Z]+)(\\d+))?(delins)([a-zA-Z]+)(\\))?");
+			.compile("(\\()?([a-zA-Z*]+)(\\d+)((_)([a-zA-Z*]+)(\\d+))?(delins)([a-zA-Z*]+)(\\))?");
 
 	public final static Pattern HGVS_REPEAT_PATTERN = Pattern
 			.compile("(\\()?([a-zA-Z]+)(\\d+)((_)([a-zA-Z]+)(\\d+))?(\\[)(\\d+)(\\])(\\))?");
@@ -32,58 +34,70 @@ public class HgvsProteinDescriptions {
 	public final static Pattern HGVS_REPEAT_BASE_PATTERN = Pattern.compile("(.+)(\\[)(.+)(\\])");
 
 	public final static Pattern HGVS_FRAMESHIFT_PATTERN = Pattern
-			.compile("(\\()?([a-zA-Z]+)(\\d+)([a-zA-Z]+)?(fs)(([a-zA-Z*]+)(\\d+))?(\\))?");
+			.compile("(\\()?([a-zA-Z*]+)(\\d+)([a-zA-Z*]+)?(fs)(([a-zA-Z*]+)(\\d+))?(\\))?");
 
 	public final static Pattern HGVS_EXTENSION_MET_PATTERN = Pattern
 			.compile("(\\()?(Met)(\\d+)([a-zA-Z]+)?(ext)((-)?\\d+)(\\))?");
 	public final static Pattern HGVS_EXTENSION_TER_PATTERN = Pattern
 			.compile("(\\()?(\\*|Ter)(\\d+)([a-zA-Z]+)(ext)([a-zA-Z]+)?(\\*|Ter)(\\d+|\\?)?(\\))?");
 
-	public static HgvsDescription parseHgvsDescription(String hgvsDescription) {
+	public static HgvsProteinDescripton parseHgvsDescription(String hgvsDescription, boolean threeLett) {
 
-		HgvsDescription proteinHgvs = parseDeletionDescription(hgvsDescription);
-
-		if (proteinHgvs == null) {
-			proteinHgvs = parseDuplicationDescription(hgvsDescription);
-		}
+		HgvsProteinDescripton proteinHgvs = parseDeletionDescription(hgvsDescription, threeLett);
 
 		if (proteinHgvs == null) {
-			proteinHgvs = parseInsertionDescription(hgvsDescription);
+			proteinHgvs = parseDuplicationDescription(hgvsDescription, threeLett);
 		}
 
 		if (proteinHgvs == null) {
-			proteinHgvs = parseDeletionInsertionDescription(hgvsDescription);
-		}
-		if (proteinHgvs == null) {
-			proteinHgvs = parseExtensionDescription(hgvsDescription);
-		}
-		if (proteinHgvs == null) {
-			proteinHgvs = parseFrameshiftDescription(hgvsDescription);
-		}
-		if (proteinHgvs == null) {
-			proteinHgvs = parseSubstitutionDescription(hgvsDescription);
-		}
-		if (proteinHgvs == null) {
-			proteinHgvs = parseRepeatDescription(hgvsDescription);
+			proteinHgvs = parseInsertionDescription(hgvsDescription, threeLett);
 		}
 
 		if (proteinHgvs == null) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
-			return builder.parsed(false).value(hgvsDescription).variantType(VariantType.UNKNOWN).build();
+			proteinHgvs = parseDeletionInsertionDescription(hgvsDescription, threeLett);
+		}
+		if (proteinHgvs == null) {
+			proteinHgvs = parseExtensionDescription(hgvsDescription,threeLett);
+		}
+		if (proteinHgvs == null) {
+			proteinHgvs = parseFrameshiftDescription(hgvsDescription, threeLett);
+		}
+		if (proteinHgvs == null) {
+			proteinHgvs = parseSubstitutionDescription(hgvsDescription, threeLett);
+		}
+		if (proteinHgvs == null) {
+			proteinHgvs = parseRepeatDescription(hgvsDescription, threeLett);
+		}
+
+		if (proteinHgvs == null) {
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			builder.parsed(false).value(hgvsDescription).variantType(VariantType.UNKNOWN);
+			return builder.build();
 		} else
 
 			return proteinHgvs;
 
 	}
-
-	private static HgvsDescription parseSubstitutionDescription(String val) {
+	
+	
+	
+	private static Function<String,String> convertAAs = aa -> {
+		return VariationUtil.convertThreeLetterAminoAcid2OneLetter(aa);
+	};
+	
+	
+//(\\()?([a-zA-Z]+)(\\d+)([a-zA-Z*=\\?]+)(\\))?
+	private static HgvsProteinDescripton parseSubstitutionDescription(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_SUBSTITUTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
+			String vt = threeLett ? convertAAs.apply(matcher.group(4)) : matcher.group(4);
 			builder.predicted(matcher.group(1) != null)
-			.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+			.wildType(wt)
 					.start(Long.parseLong(matcher.group(3)))
-					.varType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(4)))
+					.end(Long.parseLong(matcher.group(3)))
+					.varType(vt)
 					.variantType(VariantType.SUBSTITUTION)
 					.value(val).parsed(true);
 			return builder.build();
@@ -92,15 +106,17 @@ public class HgvsProteinDescriptions {
 		}
 	}
 
-	private static HgvsDescription parseDeletionDescription(String val) {
+	private static HgvsProteinDescripton parseDeletionDescription(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_DELETION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
 			builder.value(val).variantType(VariantType.DELETION).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+					.wildType(wt)
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(6) != null) {
-				builder.secondWildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(6)));
+				String wt2 = threeLett ? convertAAs.apply(matcher.group(6)) : matcher.group(6);
+				builder.secondWildType(wt2);
 			}
 
 			if (matcher.group(7) != null) {
@@ -114,15 +130,17 @@ public class HgvsProteinDescriptions {
 		}
 	}
 
-	private static HgvsDescription parseDuplicationDescription(String val) {
+	private static HgvsProteinDescripton parseDuplicationDescription(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_DUPLICATION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
 			builder.value(val).variantType(VariantType.DUPLICATION).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+					.wildType(wt)
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(6) != null) {
-				builder.secondWildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(6)));
+				String wt2 = threeLett ? convertAAs.apply(matcher.group(6)) : matcher.group(6);
+				builder.secondWildType(wt2);
 			}
 
 			if (matcher.group(7) != null) {
@@ -134,19 +152,23 @@ public class HgvsProteinDescriptions {
 			return null;
 		}
 	}
-
-	private static HgvsDescription parseInsertionDescription(String val) {
+	// "(\\()?([a-zA-Z*]+)(\\d+)(_)([a-zA-Z]+)(\\d+)(ins)([a-zA-Z*]+)?(\\d+)?(\\))?"
+	private static HgvsProteinDescripton parseInsertionDescription(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_INSERTION_PATTERN.matcher(val);
+		
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
+			String wt2 = threeLett ? convertAAs.apply(matcher.group(5)) : matcher.group(5);
 			builder.value(val).variantType(VariantType.INSERTION).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+					.wildType(wt)
 					.start(Long.parseLong(matcher.group(3))).parsed(true)
-					.secondWildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(5)))
+					.secondWildType(wt2)
 					.end(Long.parseLong(matcher.group(6)));
 			String varType = matcher.group(8);
 			if (varType != null) {
-				builder.varType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(varType));
+				String vt = threeLett ? convertAAs.apply(varType) : varType;
+				builder.varType(vt);
 			}
 			String occurrence = matcher.group(9);
 			if (occurrence != null) {
@@ -157,22 +179,24 @@ public class HgvsProteinDescriptions {
 			return null;
 		}
 	}
-
-	private static HgvsDescription parseDeletionInsertionDescription(String val) {
-
+	//(\\()?([a-zA-Z*]+)(\\d+)((_)([a-zA-Z*]+)(\\d+))?(delins)([a-zA-Z*]+)(\\))?
+	private static HgvsProteinDescripton parseDeletionInsertionDescription(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_DELETION_INSERTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
 			builder.value(val).variantType(VariantType.DELETION_INSERTION).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+					.wildType(wt)
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			String secondWildType = matcher.group(6);
 			String secondStart = matcher.group(7);
 			if (secondWildType != null) {
-				builder.secondWildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(secondWildType))
+				String vt = threeLett ? convertAAs.apply(secondWildType) : secondWildType;
+				builder.secondWildType(vt)
 				.end(Long.parseLong(secondStart));
 			}
-			builder.varType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(9)));
+			String vt = threeLett ? convertAAs.apply(matcher.group(9)) : matcher.group(9);
+			builder.varType(vt);
 
 			return builder.build();
 		} else {
@@ -181,15 +205,17 @@ public class HgvsProteinDescriptions {
 
 	}
 
-	private static HgvsDescription parseRepeatDescription(String val) {
+	private static HgvsProteinDescripton parseRepeatDescription(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_REPEAT_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
 			builder.value(val).variantType(VariantType.REPEAT).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+					.wildType(wt)
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(7) != null) {
-				builder.secondWildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(6)))
+				String vt = threeLett ? convertAAs.apply(matcher.group(6)) : matcher.group(6);
+				builder.secondWildType(vt)
 				.end(Long.parseLong(matcher.group(7)));
 			}
 			Map.Entry<String, Integer> repeat = new AbstractMap.SimpleEntry<>("", Integer.parseInt(matcher.group(9)));
@@ -200,20 +226,34 @@ public class HgvsProteinDescriptions {
 		}
 	}
 
-	private static HgvsDescription parseFrameshiftDescription(String val) {
+	//"(\\()?([a-zA-Z]+)(\\d+)([a-zA-Z]+)?(fs)(([a-zA-Z*]+)(\\d+))?(\\))?"
+	private static HgvsProteinDescripton parseFrameshiftDescription(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_FRAMESHIFT_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
 			builder.value(val).variantType(VariantType.FRAMESHIFT).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+					.wildType(wt)
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
-			if (matcher.group(8) != null) {
-				builder.end(Long.parseLong(matcher.group(8)));
-			}
+			builder.frameShift(matcher.group(5));
+			
 			if (matcher.group(4) != null) {
-				builder.varType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(4)));
+				String vt = threeLett ? convertAAs.apply(matcher.group(4)) : matcher.group(4);
+				builder.varType(vt);
 			} else
 				builder.varType("*");
+			
+			if(null != matcher.group(7) && (matcher.group(7).contains("Ter") || matcher.group(7).contains("*"))) {
+				String end = "";
+				if (matcher.group(8) != null) {
+					end = matcher.group(8);
+				}
+				if(threeLett) {
+					builder.stop("Ter" + end);
+				} else {
+				    builder.stop("*" + end);
+				}
+			}
 
 			return builder.build();
 		} else {
@@ -222,27 +262,31 @@ public class HgvsProteinDescriptions {
 
 	}
 
-	private static HgvsDescription parseExtensionDescription(String val) {
-		HgvsDescription proteinHgvs = parseExtensionDescriptionFromMet(val);
+	private static HgvsProteinDescripton parseExtensionDescription(String val, boolean threeLett) {
+		HgvsProteinDescripton proteinHgvs = parseExtensionDescriptionFromMet(val,threeLett);
 		if (proteinHgvs == null) {
-			proteinHgvs = parseExtensionDescriptionFromTer(val);
+			proteinHgvs = parseExtensionDescriptionFromTer(val,threeLett);
 		}
 		return proteinHgvs;
 
 	}
 
-	private static HgvsDescription parseExtensionDescriptionFromMet(String val) {
+	
+	
+	private static HgvsProteinDescripton parseExtensionDescriptionFromMet(String val, boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_EXTENSION_MET_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
 			builder.value(val).variantType(VariantType.EXTENSION).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2)))
+					.wildType(wt)
 					.start(Long.parseLong(matcher.group(3))).parsed(true);
 			if (matcher.group(6) != null) {
 				builder.repeat(new AbstractMap.SimpleEntry<>("*", Integer.parseInt(matcher.group(6))));
 			}
 			if (matcher.group(4) != null) {
-				builder.varType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(4)));
+				String vt = threeLett ? convertAAs.apply(matcher.group(4)) : matcher.group(4);
+				builder.varType(vt);
 			} else
 				builder.varType("?");
 
@@ -253,27 +297,34 @@ public class HgvsProteinDescriptions {
 
 	}
 
-	private static HgvsDescription parseExtensionDescriptionFromTer(String val) {
+	//"(\\()?(\\*|Ter)(\\d+)([a-zA-Z]+)(ext)([a-zA-Z]+)?(\\*|Ter)(\\d+|\\?)?(\\))?"
+	private static HgvsProteinDescripton parseExtensionDescriptionFromTer(String val,boolean threeLett) {
 		Matcher matcher = HgvsProteinDescriptions.HGVS_EXTENSION_TER_PATTERN.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			String wt = threeLett ? convertAAs.apply(matcher.group(2)) : matcher.group(2);
 			builder.value(val).variantType(VariantType.EXTENSION).predicted(matcher.group(1) != null)
-					.wildType(VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(2))							
-							).start(Long.parseLong(matcher.group(3))).parsed(true);
+					.wildType(wt).start(Long.parseLong(matcher.group(3))).parsed(true);
 
 			if (matcher.group(4) != null) {
-				builder.varType(
-						VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(4)));
+				String vt = threeLett ? convertAAs.apply(matcher.group(4)) : matcher.group(4);
+				builder.varType(vt);
 			} else
 				builder.varType("?");
 			if (matcher.group(6) != null) {
-				builder.repeat(new AbstractMap.SimpleEntry<>(
-						VariationUtil.convertThreeLetterAminoAcid2OneLetter(matcher.group(6))
-						, 1));
+				String rt = threeLett ? convertAAs.apply(matcher.group(6)) : matcher.group(6);
+				builder.repeat(new AbstractMap.SimpleEntry<>(rt, 1));
+			}
+			String stop = matcher.group(7);
+			if(null != stop) {
+				if(!threeLett && "Ter".equals(stop)) {
+					stop = VariationUtil.convertThreeLetterAminoAcid2OneLetter(stop);
+				}
+				builder.stop(stop);
 			}
 			String end = matcher.group(8);
 			if (end != null) {
-
+				
 				if (end.equals("?")) {
 					builder.repeat(new AbstractMap.SimpleEntry<>("*", -1));
 				} else {
@@ -288,11 +339,12 @@ public class HgvsProteinDescriptions {
 
 	}
 
-	private static HgvsDescription parsDescriptionBase(String val, Pattern pattern, VariantType type) {
+	private static HgvsProteinDescripton parsDescriptionBase(String val, Pattern pattern, VariantType type) {
 		Matcher matcher = pattern.matcher(val);
 		if (matcher.matches()) {
-			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
-			return builder.value(val).variantType(type).parsed(false).build();
+			HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+			builder.value(val).variantType(type);
+			return builder.build();
 		} else {
 			return null;
 		}

@@ -1,6 +1,9 @@
 package uk.ac.ebi.uniprot.variation.util;
 
 import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
+import uk.ac.ebi.uniprot.variation.hgvs.HgvsProteinDescripton;
+import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
+import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsProteinDescriptionImpl;
 
 public class VariationUtil {
     
@@ -51,5 +54,80 @@ public class VariationUtil {
         return sb.toString();
     }
 
-  
-}
+    
+
+	public static String FormatAAWildType(HgvsProteinDescripton hgvsDescription, boolean threeLett) {
+		
+		String wildType = hgvsDescription.getWildType();
+		if(threeLett) {
+			wildType = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(wildType);
+		}
+		StringBuilder sb = new StringBuilder(wildType);
+
+		if(null != hgvsDescription.getSecondWildType()) {
+			String secWildType = hgvsDescription.getSecondWildType();
+			if(threeLett) {
+				secWildType = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(secWildType);
+			}
+			sb.append("_").append(secWildType);
+		}
+		return sb.toString();
+	}
+	
+	
+	
+	public static String addRepeat(HgvsProteinDescripton hgvs,boolean bracket) {
+		StringBuilder sb = new StringBuilder();
+		if(bracket) {
+			sb.append("[");
+		}
+		sb.append(hgvs.getRepeats().get(0).getKey()).append(hgvs.getRepeats().get(0).getValue());
+		if(bracket) {
+			sb.append("]");
+		}
+		return sb.toString();
+	}
+	
+
+	public static String FormatAAVarType(HgvsProteinDescripton hgvs, boolean threeLett) {
+		StringBuilder sb = new StringBuilder();
+		
+		String varType = hgvs.getVarType();
+		if(threeLett) {
+			varType = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(varType);
+		}
+		
+		if(VariantType.REPEAT.equals(hgvs.getVariantType())) {
+			return addRepeat(hgvs,true);
+		}
+		sb.append(varType);
+		if(VariantType.EXTENSION.equals(hgvs.getVariantType())) {
+			sb.append("ext");
+			if(!hgvs.getRepeats().isEmpty()) {
+				sb.append(addRepeat(hgvs,false));
+			}
+		 return sb.toString();	
+		}
+		
+		if(hgvs.hasFrameShift()) {
+			sb.append("fs");
+		}
+		if(hgvs.hasTer()) {
+			if("Ter".equals(hgvs.getStop()) && !threeLett) {
+				sb.append(VariationUtil.convertThreeLetterAminoAcid2OneLetter(hgvs.getStop()));
+			} else {
+				sb.append(hgvs.getStop());
+			}
+		}
+		
+		return sb.toString();
+	}
+	
+	
+	
+	
+	
+	
+    
+    
+  }

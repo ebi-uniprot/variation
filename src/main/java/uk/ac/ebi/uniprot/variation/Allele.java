@@ -17,7 +17,7 @@ public class Allele {
 
 	public static Allele fromHgvs(String genomeHgvs) {
 		if ((genomeHgvs != null) && !genomeHgvs.isEmpty()){
-			Hgvs hgvs =Hgvss.from(genomeHgvs);
+			Hgvs hgvs =Hgvss.from(genomeHgvs,false);
 			if(hgvs.getDescription().getVariantType()  ==VariantType.SUBSTITUTION) {
 				return new Allele(hgvs.getDescription().getWildType(), 
 						hgvs.getDescription().getVarType());
