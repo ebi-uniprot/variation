@@ -6,7 +6,7 @@
 		<version>1.0</version>
 		<relativePath>../uniprot-ujdk-parent</relativePath>
 	</parent>
-	<version>2018.8-SNAPSHOT</version>
+	<version>2019.3</version>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>variation-common</artifactId>
 	<name>variation-common</name>
