@@ -12,14 +12,14 @@ public class HgvssTest {
 	@Test
 	public void testFromCDnaHgvs() {
 		String val = "ENSMUST00000082421.1:c.115G>A";
-		Hgvs hgvs = Hgvss.from(val);
+		Hgvs hgvs = Hgvss.from(val,false);
 		verify(hgvs, "ENSMUST00000082421.1", HgvsType.CDNA, "115G>A", val);
 	}
 
 	@Test(expected = InvalidHgvsException.class)
 	public void wrongSequenceType() {
 		String val = "ENSMUST00000082421.1:a.115G>A";
-		Hgvs hgvs = Hgvss.from(val);
+		Hgvs hgvs = Hgvss.from(val,false);
 		verify(hgvs, "ENSMUST00000082421.1", HgvsType.CDNA, "115G>A", val);
 
 	}
@@ -27,21 +27,21 @@ public class HgvssTest {
 	@Test(expected = InvalidHgvsException.class)
 	public void wrongHgvs() {
 		String val = "ENSMUST00000082421.1:g115G>A";
-		Hgvs hgvs = Hgvss.from(val);
+		Hgvs hgvs = Hgvss.from(val,false);
 		verify(hgvs, "ENSMUST00000082421.1", HgvsType.CDNA, "115G>A", val);
 	}
 
 	@Test
 	public void testFromProteinHgvs() {
 		String val = "NP_003997.1:p.(Trp24Cys)";
-		Hgvs hgvs = Hgvss.from(val);
+		Hgvs hgvs = Hgvss.from(val,true);
 		verify(hgvs, "NP_003997.1", HgvsType.PROTEIN, "(Trp24Cys)", val);
 	}
 
 	@Test
 	public void testFromRnaHgvs() {
 		String val = "NM_004006.1:r.14a>c";
-		Hgvs hgvs = Hgvss.from(val);
+		Hgvs hgvs = Hgvss.from(val,false);
 		verify(hgvs, "NM_004006.1", HgvsType.RNA, "14a>c", val);
 	}
 

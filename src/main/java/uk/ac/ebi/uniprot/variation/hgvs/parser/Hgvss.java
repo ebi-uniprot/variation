@@ -14,13 +14,13 @@ public final class Hgvss {
 	public final static String HGVS = "([\\w.-]+)(\\:)([cgmnpr])(\\.)(.+)"; // ENSMUST00000082421.1:c.115G>A;
 	public final static Pattern HGVS_PATTERN = Pattern.compile(HGVS);
 
-	public static Hgvs from(String hgvsString) {
+	public static Hgvs from(String hgvsString,boolean threeLett) {
 		Matcher matcher = Hgvss.HGVS_PATTERN.matcher(hgvsString);
 		if (matcher.matches()) {
 			String sequenceId = matcher.group(1);
 			HgvsType seqType = HgvsType.getType(matcher.group(3));
 			String description = matcher.group(5);
-			return new HgvsImpl( seqType, sequenceId,  parseDescription(seqType, description));
+			return new HgvsImpl( seqType, sequenceId,  parseDescription(seqType, description,threeLett));
 		} else {
 			throw new InvalidHgvsException(hgvsString + " cannot be parsed");
 		}
@@ -43,7 +43,7 @@ public final class Hgvss {
 //	        }
 //	        return builder.build();
 //	}
-	public static HgvsDescription parseDescription(HgvsType type, String description) {
+	public static HgvsDescription parseDescription(HgvsType type, String description, boolean threeLett) {
 		switch (type) {
 		case GENOME:
 		case CDNA:
@@ -53,7 +53,7 @@ public final class Hgvss {
 		case RNA:
 			return HgvsRnaDescriptions.parseHgvsDescription(description);
 		case PROTEIN:
-			return HgvsProteinDescriptions.parseHgvsDescription(description);
+			return HgvsProteinDescriptions.parseHgvsDescription(description,threeLett);
 		default:
 			throw new InvalidadHgvsDescription(description + " cannot be parsed.");
 		}
