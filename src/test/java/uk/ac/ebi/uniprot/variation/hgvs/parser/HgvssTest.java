@@ -37,6 +37,13 @@ public class HgvssTest {
 		Hgvs hgvs = Hgvss.from(val,true);
 		verify(hgvs, "NP_003997.1", HgvsType.PROTEIN, "(Trp24Cys)", val);
 	}
+	
+	@Test
+	public void testFromPombeProteinHgvs() {
+		String val = "SPAC1805.18.1:pep.1:p.Arg78Trp";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "SPAC1805.18.1:pep.1", HgvsType.PROTEIN, "Arg78Trp", val);
+	}
 
 	@Test
 	public void testFromRnaHgvs() {
