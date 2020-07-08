@@ -2,7 +2,9 @@ package uk.ac.ebi.uniprot.variation.hgvs.parser;
 
 import static org.junit.Assert.assertEquals;
 
+
 import org.junit.Test;
+
 
 import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
 import uk.ac.ebi.uniprot.variation.hgvs.Hgvs;
@@ -45,6 +47,16 @@ public class HgvssTest {
 		verify(hgvs, "SPAC1805.18.1:pep.1", HgvsType.PROTEIN, "Arg78Trp", val);
 	}
 
+	@Test
+	public void testLRGHgvswithDash() {
+		String val = "LRG_321t1-1:c.978A>T";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "LRG_321t1-1", HgvsType.CDNA, "978A>T", val);
+	}
+	
+	
+	
+	
 	@Test
 	public void testFromRnaHgvs() {
 		String val = "NM_004006.1:r.14a>c";
