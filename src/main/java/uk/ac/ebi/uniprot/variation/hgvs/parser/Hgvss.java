@@ -48,7 +48,6 @@ public final class Hgvss {
 		switch (type) {
 		case GENOME:
 		case CDNA:
-		case CDS:
 		case MDNA:
 		case NDNA:
 			return HgvsDnaDescriptions.parseHgvsDescription(description);

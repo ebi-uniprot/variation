@@ -2,7 +2,7 @@ package uk.ac.ebi.uniprot.variation.hgvs;
 
 public enum HgvsType {
 	PROTEIN("p", "Protein"), GENOME("g", "Genome"), RNA("r", "RNA"), CDNA("c", "cDNA"), MDNA("m", "mDNA"), NDNA("n",
-			"nDNA"),CDS("cds", "CDS"),UNKNOWN("unknown", "UNKNOWN");
+			"nDNA"),UNKNOWN("unknown", "UNKNOWN");
     private final String id;
     private final String name;
     HgvsType(String id, String name){
