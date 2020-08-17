@@ -91,7 +91,10 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 	
 	@Override
 	public String getDisplayValue(boolean threeLett) {
-		if(null == this.getValue()) {
+		if(null != this.getValue()) {
+			return this.getValue();
+		}
+		
 			StringBuilder sb = new StringBuilder();
 			if(this.isPredicted()) {
 				sb.append("(");
@@ -115,8 +118,6 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 			}
 			if(null == this.getVarType()) {
 				sb.append(noVarHgvsEnd(threeLett));
-				
-			
 			
 			} else { 
 				
@@ -131,13 +132,9 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 					sb.append(addExtension(threeLett, disVarType));
 				
 				} else {
-				
-				
 					if(this.getVariantType().equals(VariantType.INSERTION)) {
 						sb.append("ins");
-						sb.append(this.getRepeats().get(0).getValue());
-						
-						
+						sb.append(disVarType);
 					}
 					else if(this.getVariantType().equals(VariantType.DELETION_INSERTION)) {
 						sb.append("delins").append(disVarType);
@@ -149,16 +146,11 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 					 else {
 						sb.append(disVarType);
 					}
-					
-					
 					if(this.ter) {
 						sb.append(addTer(threeLett));
 					}
-						
 					if(null != this.getEndCross())
 						sb.append(this.getEndCross());
-				
-			
 				}
 			}
 			if(isPredicted()) {
@@ -168,10 +160,7 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 			return sb.toString();
 			
 			
-			
-		}	
-			
-		return this.getValue();
+		
 	}
 
 	
@@ -193,21 +182,25 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 
 	private String addExtension(boolean threeLett, String disVarType) {
 		
-		if(this.getWildType().equals("M")) {
-			return "ext-";
+		if(this.getWildType().equals("M") && null == disVarType) {
+			return "ext".concat(getRepeats().get(0).getValue().toString());
 		}
 		else if(null != this.getVarType()) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(disVarType).append("ext");
 			for (Entry<String, Integer> entry : this.getRepeats()) {
+				
 				String ext = entry.getKey();
-				if(threeLett) {
-					ext = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(ext);
+				if(null != ext) {
+					if(threeLett) {
+						ext = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(ext);
+					}
+					sb.append(ext);
 				}
-				sb.append(ext);
 				if(null != entry.getValue()) {
 					sb.append(entry.getValue());
 				}
+				
 			}
 			return sb.toString();
 		}
@@ -223,26 +216,39 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 	}
 
 	private String noVarHgvsEnd(boolean threeLett) {
-		if(this.ter) {
-			return addTer(threeLett);
-		}
-		else if(this.getVariantType().equals(VariantType.DUPLICATION)) {
+		StringBuilder sb = new StringBuilder();
+		if(this.getVariantType().equals(VariantType.DUPLICATION)) {
 			return "dup";
 			
 		} 
 		else if(this.getVariantType().equals(VariantType.DELETION)) {
 			return "del";
 			
+		} else if(this.getVariantType().equals(VariantType.INSERTION)) {
+			sb.append("ins");
+			sb.append(this.getRepeats().get(0).getValue());
+			
+			
 		}
 		
 		else if(this.getVariantType().equals(VariantType.REPEAT)) {
-			StringBuilder sb = new StringBuilder();
+			
 			for (Entry<String, Integer> entry : this.getRepeats()) {
 				sb.append(entry.getKey()).append("[").append(entry.getValue()).append("]");
 			}
 			return sb.toString();
+		} else if(this.getVariantType().equals(VariantType.EXTENSION)) {
+			
+			sb.append(addExtension(threeLett, null));
+			return sb.toString();
+		} else if(this.getVariantType().equals(VariantType.DELETION_INSERTION)) {
+			sb.append("delins");
+		} 
+		
+		if(this.ter) {
+			sb.append(addTer(threeLett));
 		}
-		return "";
+		return sb.toString();
 	}
 	
 }

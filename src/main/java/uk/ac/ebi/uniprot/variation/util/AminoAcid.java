@@ -36,6 +36,8 @@ public enum AminoAcid {
     SELENOCYSTEINE("CSE", "U", false, "Cse"),
     PYRROLYSINE("PYR", "O", false, "Pyr"),
     TER("TER", "*", false, "Ter"),
+    SILENT("=","=",false,"="),
+    QUESTION("?","?",false,"?"),
     // for when you just don't know...
     UNKNOWN("UNK", "X", false, "Unk");
 
