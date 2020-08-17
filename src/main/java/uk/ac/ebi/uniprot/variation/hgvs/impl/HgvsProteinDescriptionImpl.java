@@ -26,6 +26,14 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 	private boolean frameShift;
 	private String stop = "";
 	
+	@Override
+	public String getValue() {
+		if(null == value || value.isEmpty()) {
+			return getDisplayValue();
+		}
+		return value;
+	}
+	
 	public static Builder builder() {
 		return new Builder();
 	}
@@ -89,8 +97,7 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 	
 
 	
-	@Override
-	public String getDisplayValue() {
+	private String getDisplayValue() {
 		
 		
 			StringBuilder sb = new StringBuilder();

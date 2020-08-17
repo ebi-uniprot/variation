@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
 import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
+import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsDescriptionImpl;
 
 public class HgvsDnaDescriptionParserTest {
 	@Test
@@ -23,6 +24,78 @@ public class HgvsDnaDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 
+	}
+	
+	@Test
+	public void testSubstitutionDisplayValue() {
+		String val = "24A>G";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(24l).wildType("A").varType("G").variantType(VariantType.SUBSTITUTION).secondWildType("T");
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
+	}	
+
+	@Test
+	public void testInsertionBuildDisplayValue() {
+		String val = "24_25insG";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(25l).wildType("-").varType("G").variantType(VariantType.INSERTION).secondWildType("T");
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
+	}	
+	
+	@Test
+	public void testDeletionBuildDisplayValue() {
+		String val = "24_25del";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(25l).wildType("TGTG").varType("TG").variantType(VariantType.DELETION).secondWildType("T");
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
+	}
+	
+	@Test
+	public void testInversionBuildDisplayValue() {
+		String val = "24_25inv";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(25l).wildType("CA").varType("TG").variantType(VariantType.INVERSION).secondWildType("T");
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
+	}
+	
+	@Test
+	public void testDelInsBuildDisplayValue() {
+		String val = "24_25delinsTG";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(25l).wildType("CA").varType("TG").variantType(VariantType.DELETION_INSERTION);
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
+	}
+	
+	@Test
+	public void testStartCrossBuildDisplayValue() {
+		String val = "24+26_25delinsTG";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(25l).wildType("CA").varType("TG").variantType(VariantType.DELETION_INSERTION).startCross(26l);
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
+	}
+	
+	@Test
+	public void testEndCrosssBuildDisplayValue() {
+		String val = "24_25+26delinsTG";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(25l).wildType("CA").varType("TG").variantType(VariantType.DELETION_INSERTION).endCross(26l);
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
+	}
+	
+	@Test
+	public void testStartEndCrosssBuildDisplayValue() {
+		String val = "24+23_25+26delinsTG";
+		HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
+		builder.start(24l).end(25l).wildType("CA").varType("TG").variantType(VariantType.DELETION_INSERTION).startCross(23l).endCross(26l);
+		HgvsDescription hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getValue());
 	}
 
 	@Test

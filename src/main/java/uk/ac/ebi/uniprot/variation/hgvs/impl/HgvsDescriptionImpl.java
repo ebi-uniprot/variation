@@ -21,7 +21,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	private final String secondWildType;
 
 	private final VariantType variantType;
-	private final String value;
+	protected final String value;
 	private final boolean parsed;
 	private final String conversionSeqId;
 	private final List<Map.Entry<String, Integer> > repeats;
@@ -201,42 +201,82 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 		
 	 */
 
-	@Override
-	public String getDisplayValue() {
-		
-			StringBuilder sb = new StringBuilder();
-			sb.append(this.start);
-			if(null != this.startCross) {
-				sb.append("+").append(this.startCross);
-			}
-			if(null != this.end) {
-				sb.append("_").append(this.end);
-			}
-			if(null != this.endCross) {
-				sb.append("+").append(this.endCross);
-			}
-			if(null != this.conversionSeqId) {
-				sb.append(this.conversionSeqId);
-			} else if(null != repeats) {
-				for (Entry<String, Integer> entry : repeats) {
-					sb.append(entry.getKey()).append("[").append(entry.getValue()).append("]");
-				}
-			}
-			else {
-				if(null != this.wildType) {
-					sb.append(this.wildType);
-				}
-				if(this.variantType.equals(VariantType.SUBSTITUTION)) {
-					sb.append(">");
-				}
-				if(null != this.varType) {
-					sb.append(this.varType);
-				}
-			}
-			return sb.toString();
-		
-	}
+//	@Override
+//	public String getDisplayValue() {
+//		
+//			StringBuilder sb = new StringBuilder();
+//			sb.append(this.start);
+//			if(null != this.startCross) {
+//				sb.append("+").append(this.startCross);
+//			}
+//			if(null != this.end) {
+//				sb.append("_").append(this.end);
+//			}
+//			if(null != this.endCross) {
+//				sb.append("+").append(this.endCross);
+//			}
+//			if(null != this.conversionSeqId) {
+//				sb.append(this.conversionSeqId);
+//			} else if(null != repeats) {
+//				for (Entry<String, Integer> entry : repeats) {
+//					sb.append(entry.getKey()).append("[").append(entry.getValue()).append("]");
+//				}
+//			}
+//			else {
+//				if(null != this.wildType) {
+//					sb.append(this.wildType);
+//				}
+//				if(this.variantType.equals(VariantType.SUBSTITUTION)) {
+//					sb.append(">");
+//				}
+//				if(null != this.varType) {
+//					sb.append(this.varType);
+//				}
+//			}
+//			return sb.toString();
+//		
+//	}
 	
+	private String getDisplayValue() {
+		if (null != this.value)
+			return this.value;
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.start);
+		if (this.startCross != null)
+			sb.append("+").append(this.startCross);
+		if (this.start != this.end)
+			sb.append("_").append(this.end);
+		if (this.endCross != null)
+			sb.append("+").append(this.endCross);
+		String disVarType = this.varType;
+		VariantType variantType = this.getVariantType();
+		switch (variantType) {
+		case INSERTION:
+			sb.append("ins").append(disVarType);
+			break;
+		case DELETION:
+			sb.append("del");
+			break;
+		case SUBSTITUTION:
+			sb.append(this.wildType).append(">").append(disVarType);
+			break;
+		case DUPLICATION:
+			sb.append("dup");
+			break;
+		case DELETION_INSERTION:
+			sb.append("delins").append(disVarType);
+			break;
+		case INVERSION:
+			sb.append("inv");
+			break;
+		default:
+			sb.append(this.wildType).append(">").append(disVarType);
+			break;
+		}
+		return sb.toString();
+
+	}
 	
 	
 }

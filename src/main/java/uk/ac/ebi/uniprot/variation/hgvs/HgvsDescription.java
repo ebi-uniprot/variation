@@ -17,6 +17,6 @@ public interface HgvsDescription {
 	String getValue();
 	boolean isParsed();
 	List<Map.Entry<String, Integer> > getRepeats();
-	String getDisplayValue();
+//	String getDisplayValue();
 	
 }
