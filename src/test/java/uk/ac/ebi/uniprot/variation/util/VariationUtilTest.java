@@ -77,17 +77,17 @@ public class VariationUtilTest {
     public void testFormatAAWildType() {
     	
     	HgvsProteinDescripton hgvsDescription = makeFrameShift();
-		String wildTypeOneLett = VariationUtil.FormatAAWildType(hgvsDescription, false);
+		String wildTypeOneLett = VariationUtil.formatAAWildType(hgvsDescription, false);
 		assertEquals("Q",wildTypeOneLett);
-		String wildTypeThreeLett = VariationUtil.FormatAAWildType(hgvsDescription, true);
+		String wildTypeThreeLett = VariationUtil.formatAAWildType(hgvsDescription, true);
 		assertEquals("Gln",wildTypeThreeLett);
 		
 		//"Arg65_Ser67[12]"
 		
 		hgvsDescription = makeRepeat();
-		wildTypeOneLett = VariationUtil.FormatAAWildType(hgvsDescription, false);
+		wildTypeOneLett = VariationUtil.formatAAWildType(hgvsDescription, false);
 		assertEquals("R_S",wildTypeOneLett);
-		wildTypeThreeLett = VariationUtil.FormatAAWildType(hgvsDescription, true);
+		wildTypeThreeLett = VariationUtil.formatAAWildType(hgvsDescription, true);
 		assertEquals("Arg_Ser",wildTypeThreeLett);
 		
 		
@@ -98,14 +98,14 @@ public class VariationUtilTest {
     public void testFormatAAVarType() {
 		
     	HgvsProteinDescripton hgvsDescription = makeFrameShift();
-		String varTypeOneLett = VariationUtil.FormatAAVarType(hgvsDescription, false);
+		String varTypeOneLett = VariationUtil.formatAAVarType(hgvsDescription, false);
 		assertEquals("Tfs*9",varTypeOneLett);
-		String varTypeThreeLett = VariationUtil.FormatAAVarType(hgvsDescription, true);
+		String varTypeThreeLett = VariationUtil.formatAAVarType(hgvsDescription, true);
 		assertEquals("Thrfs*9",varTypeThreeLett);
 		hgvsDescription = makeRepeat();
-		varTypeOneLett = VariationUtil.FormatAAVarType(hgvsDescription, false);
+		varTypeOneLett = VariationUtil.formatAAVarType(hgvsDescription, false);
 		assertEquals("[12]",varTypeOneLett);
-		varTypeThreeLett = VariationUtil.FormatAAVarType(hgvsDescription, true);
+		varTypeThreeLett = VariationUtil.formatAAVarType(hgvsDescription, true);
 		assertEquals("[12]",varTypeThreeLett);
     }
 
@@ -121,9 +121,9 @@ public class VariationUtilTest {
     public void testFormatAAVarType2() {
 		
     	HgvsProteinDescripton hgvsDescription = makeFrameShift2();
-		String varTypeOneLett = VariationUtil.FormatAAVarType(hgvsDescription, false);
+		String varTypeOneLett = VariationUtil.formatAAVarType(hgvsDescription, false);
 		assertEquals("Vfs*4",varTypeOneLett);
-		String varTypeThreeLett = VariationUtil.FormatAAVarType(hgvsDescription, true);
+		String varTypeThreeLett = VariationUtil.formatAAVarType(hgvsDescription, true);
 		assertEquals("Valfs*4",varTypeThreeLett);
 		
     }
@@ -142,9 +142,9 @@ public class VariationUtilTest {
     	HgvsProteinDescripton hgvsDescription = makeFrameShift3();
     	assertEquals("*",hgvsDescription.getWildType());
     	assertEquals(new Long(194l),hgvsDescription.getStart());
-		String varTypeOneLett = VariationUtil.FormatAAVarType(hgvsDescription, false);
+		String varTypeOneLett = VariationUtil.formatAAVarType(hgvsDescription, false);
 		assertEquals("Mfs*15",varTypeOneLett);
-		String varTypeThreeLett = VariationUtil.FormatAAVarType(hgvsDescription, true);
+		String varTypeThreeLett = VariationUtil.formatAAVarType(hgvsDescription, true);
 		assertEquals("Metfs*15",varTypeThreeLett);
 		
     }

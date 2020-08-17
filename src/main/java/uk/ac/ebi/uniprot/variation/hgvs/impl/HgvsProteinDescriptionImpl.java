@@ -87,49 +87,35 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 		return stop;
 	}
 	
-	
+
 	
 	@Override
-	public String getDisplayValue(boolean threeLett) {
-		if(null != this.getValue()) {
-			return this.getValue();
-		}
+	public String getDisplayValue() {
+		
 		
 			StringBuilder sb = new StringBuilder();
 			if(this.isPredicted()) {
 				sb.append("(");
 			}
-			if(threeLett) {
-				sb.append(VariationUtil.convertOneLetterAminoAcid2ThreeLetters(this.getWildType()));
-			} else {
-				sb.append(this.getWildType());
-			}
+			
+			sb.append(VariationUtil.convertOneLetterAminoAcid2ThreeLetters(this.getWildType()));
 			
 			sb.append(this.getStart());
 			if(null != this.getSecondWildType()) {
 				sb.append("_");
-				if(threeLett) {
-					sb.append(VariationUtil.convertOneLetterAminoAcid2ThreeLetters(this.getSecondWildType()));
-				} else {
-					sb.append(this.getSecondWildType());
-				}
-				
+				sb.append(VariationUtil.convertOneLetterAminoAcid2ThreeLetters(this.getSecondWildType()));
 				sb.append(this.getEnd());
 			}
 			if(null == this.getVarType()) {
-				sb.append(noVarHgvsEnd(threeLett));
+				sb.append(noVarHgvsEnd());
 			
 			} else { 
 				
 				String disVarType = null;
-				if(threeLett) {
-					disVarType = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(this.getVarType());
-				} else {
-					disVarType = this.getVarType();
-				}
+				disVarType = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(this.getVarType());
 				
 				if(this.getVariantType().equals(VariantType.EXTENSION) ) {
-					sb.append(addExtension(threeLett, disVarType));
+					sb.append(addExtension(disVarType));
 				
 				} else {
 					if(this.getVariantType().equals(VariantType.INSERTION)) {
@@ -147,7 +133,7 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 						sb.append(disVarType);
 					}
 					if(this.ter) {
-						sb.append(addTer(threeLett));
+						sb.append(addTer());
 					}
 					if(null != this.getEndCross())
 						sb.append(this.getEndCross());
@@ -158,8 +144,6 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 			}
 			
 			return sb.toString();
-			
-			
 		
 	}
 
@@ -180,7 +164,7 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 		return sb.toString();
 	}
 
-	private String addExtension(boolean threeLett, String disVarType) {
+	private String addExtension(String disVarType) {
 		
 		if(this.getWildType().equals("M") && null == disVarType) {
 			return "ext".concat(getRepeats().get(0).getValue().toString());
@@ -192,10 +176,7 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 				
 				String ext = entry.getKey();
 				if(null != ext) {
-					if(threeLett) {
-						ext = VariationUtil.convertOneLetterAminoAcid2ThreeLetters(ext);
-					}
-					sb.append(ext);
+					sb.append(VariationUtil.convertOneLetterAminoAcid2ThreeLetters(ext));
 				}
 				if(null != entry.getValue()) {
 					sb.append(entry.getValue());
@@ -208,14 +189,14 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 		return "ext";
 	}
 
-	private String addTer(boolean threeLett) {
-		if(threeLett && stop.contains("*"))
+	private String addTer() {
+		if(stop.contains("*"))
 			return stop.replace("*", "Ter");
 		
 		return stop;
 	}
 
-	private String noVarHgvsEnd(boolean threeLett) {
+	private String noVarHgvsEnd() {
 		StringBuilder sb = new StringBuilder();
 		if(this.getVariantType().equals(VariantType.DUPLICATION)) {
 			return "dup";
@@ -239,14 +220,14 @@ public class HgvsProteinDescriptionImpl extends HgvsDescriptionImpl implements H
 			return sb.toString();
 		} else if(this.getVariantType().equals(VariantType.EXTENSION)) {
 			
-			sb.append(addExtension(threeLett, null));
+			sb.append(addExtension(null));
 			return sb.toString();
 		} else if(this.getVariantType().equals(VariantType.DELETION_INSERTION)) {
 			sb.append("delins");
 		} 
 		
 		if(this.ter) {
-			sb.append(addTer(threeLett));
+			sb.append(addTer());
 		}
 		return sb.toString();
 	}

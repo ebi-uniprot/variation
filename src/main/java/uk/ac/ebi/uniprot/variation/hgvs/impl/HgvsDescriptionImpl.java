@@ -173,6 +173,9 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	}
 	@Override
 	public String getValue() {
+		if(null == value || value.isEmpty()) {
+			return getDisplayValue();
+		}
 		return value;
 	}
 	@Override
@@ -199,8 +202,8 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	 */
 
 	@Override
-	public String getDisplayValue(boolean threeLett) {
-		if(null == this.value) {
+	public String getDisplayValue() {
+		
 			StringBuilder sb = new StringBuilder();
 			sb.append(this.start);
 			if(null != this.startCross) {
@@ -231,8 +234,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 				}
 			}
 			return sb.toString();
-		}
-		return this.value;
+		
 	}
 	
 	

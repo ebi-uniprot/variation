@@ -3,7 +3,7 @@ package uk.ac.ebi.uniprot.variation.util;
 import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsProteinDescripton;
 import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
-import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsProteinDescriptionImpl;
+
 
 public class VariationUtil {
     
@@ -11,6 +11,9 @@ public class VariationUtil {
     private static final String DASH = "-";
     private static final String DEL = "del";
     private static final String EQUALS = "=";
+    
+    
+    private VariationUtil() {}
 
     public static String convertThreeLetterAminoAcid2OneLetter(String aa) {
         if (aa.equalsIgnoreCase(DEL))
@@ -19,7 +22,8 @@ public class VariationUtil {
         	return EQUALS;
         }
         if (aa.length() < 3) {
-            return DASH;
+        	AminoAcid aminoAcid = AminoAcid.valueOfOneLetterCode(aa);
+        	return validateAminoAcid(aminoAcid);
         }
         int start = 0;
         int end = 3;
@@ -27,11 +31,8 @@ public class VariationUtil {
         while (start < aa.length()) {
             String threeLetter = aa.substring(start, end);
             AminoAcid aminoAcid = AminoAcid.valueOfThreeLetterCode(threeLetter);
-            if (aminoAcid == AminoAcid.UNKNOWN) {
-                sb.append(DASH);
-            } else {
-                sb.append(aminoAcid.getOneLetterCode());
-            }
+            sb.append(validateAminoAcid(aminoAcid));
+           
             start = end;
             if(start>=aa.length()) {
             		break;
@@ -44,6 +45,16 @@ public class VariationUtil {
         }
         return sb.toString();
     }
+    
+    private static String validateAminoAcid(AminoAcid aa) {
+    	if (aa == AminoAcid.UNKNOWN) {
+            return DASH;
+        } else {
+           return aa.getOneLetterCode();
+        }
+    }
+    
+    
 
     public static String convertOneLetterAminoAcid2ThreeLetters(String aa) {
         if (aa.equals(DASH) || aa.isEmpty()) {
@@ -60,7 +71,7 @@ public class VariationUtil {
 
     
 
-	public static String FormatAAWildType(HgvsProteinDescripton hgvsDescription, boolean threeLett) {
+	public static String formatAAWildType(HgvsProteinDescripton hgvsDescription, boolean threeLett) {
 		
 		String wildType = hgvsDescription.getWildType();
 		if(threeLett) {
@@ -93,7 +104,7 @@ public class VariationUtil {
 	}
 	
 
-	public static String FormatAAVarType(HgvsProteinDescripton hgvs, boolean threeLett) {
+	public static String formatAAVarType(HgvsProteinDescripton hgvs, boolean threeLett) {
 		StringBuilder sb = new StringBuilder();
 		
 		String varType = hgvs.getVarType();

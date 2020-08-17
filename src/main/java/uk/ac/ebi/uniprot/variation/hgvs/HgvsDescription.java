@@ -3,8 +3,6 @@ package uk.ac.ebi.uniprot.variation.hgvs;
 import java.util.List;
 import java.util.Map;
 
-import uk.ac.ebi.uniprot.variation.util.VariationUtil;
-
 public interface HgvsDescription {
 	boolean isPredicted();
 	String getWildType();
@@ -19,6 +17,6 @@ public interface HgvsDescription {
 	String getValue();
 	boolean isParsed();
 	List<Map.Entry<String, Integer> > getRepeats();
-	String getDisplayValue(boolean threeLett);
+	String getDisplayValue();
 	
 }
