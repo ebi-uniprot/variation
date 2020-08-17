@@ -98,8 +98,12 @@ public class HgvsProteinDescriptions {
 					.start(Long.parseLong(matcher.group(3)))
 					.end(Long.parseLong(matcher.group(3)))
 					.varType(vt)
-					.variantType(VariantType.SUBSTITUTION)
 					.value(val).parsed(true);
+			
+			if(vt.equals("="))
+				builder.variantType(VariantType.SILENT);
+			else 
+				builder.variantType(VariantType.SUBSTITUTION);
 			return builder.build();
 		} else {
 			return null;
@@ -241,7 +245,7 @@ public class HgvsProteinDescriptions {
 				String vt = threeLett ? convertAAs.apply(matcher.group(4)) : matcher.group(4);
 				builder.varType(vt);
 			} else
-				builder.varType("*");
+				builder.varType("");
 			
 			if(null != matcher.group(7) && (matcher.group(7).contains("Ter") || matcher.group(7).contains("*"))) {
 				String end = "";

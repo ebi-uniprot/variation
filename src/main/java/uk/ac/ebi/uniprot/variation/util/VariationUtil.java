@@ -10,10 +10,14 @@ public class VariationUtil {
     private static final String DEL2 = "Del";
     private static final String DASH = "-";
     private static final String DEL = "del";
+    private static final String EQUALS = "=";
 
     public static String convertThreeLetterAminoAcid2OneLetter(String aa) {
-        if (aa.equals(DEL2))
-            return DASH;
+        if (aa.equalsIgnoreCase(DEL))
+            return DEL;
+        if (aa.equals(EQUALS)) {
+        	return EQUALS;
+        }
         if (aa.length() < 3) {
             return DASH;
         }

@@ -4,16 +4,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.junit.Test;
 
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsProteinDescripton;
 import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
+import uk.ac.ebi.uniprot.variation.hgvs.impl.HgvsProteinDescriptionImpl;
 
 public class HgvsProteinDescriptionParserTest {
 	@Test
 	public void testSubstitutionDescriptionMissense() {
 		String val = "Trp24Cys";
 		HgvsProteinDescripton hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val,true);
+		
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(24l, hgvsDescription.getStart().longValue());
 		assertEquals("W", hgvsDescription.getWildType());
@@ -22,6 +29,16 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 	}
+	
+	@Test
+	public void testSubstitutionDescriptionMissenseBuildDisplayValue() {
+		String val = "Trp24Cys";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(24l).wildType("W").varType("C").variantType(VariantType.MISSENSE);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testSubstitutionDescriptionPred() {
@@ -37,6 +54,16 @@ public class HgvsProteinDescriptionParserTest {
 	}
 
 	@Test
+	public void testMissenseDescriptionPredBuildDisplayValue() {
+		String val = "(Trp24Cys)";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(24l).wildType("W").varType("C").variantType(VariantType.MISSENSE).predicted(true);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
+	
+	@Test
 	public void testSubstitutionDescriptionNonsense() {
 		String val = "Trp24*";
 		HgvsProteinDescripton hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val,true);
@@ -48,6 +75,16 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 	}
+	
+	@Test
+	public void testSubstitutionDescriptionNonsenseBuildDisplayValue() {
+		String val = "Trp24Ter";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.stop("Ter").start(24l).wildType("W").variantType(VariantType.MISSENSE).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testSubstitutionDescriptionSilent() {
@@ -56,11 +93,22 @@ public class HgvsProteinDescriptionParserTest {
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(188l, hgvsDescription.getStart().longValue());
 		assertEquals("C", hgvsDescription.getWildType());
-		assertEquals("-", hgvsDescription.getVarType());
+		assertEquals("=", hgvsDescription.getVarType());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
-		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
+		assertEquals(VariantType.SILENT, hgvsDescription.getVariantType());
 	}
+	
+	
+	@Test
+	public void testSubstitutionDescriptionSilentRoundTrip() {
+		String val = "Cys188=";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(188l).wildType("C").varType("=").variantType(VariantType.SILENT).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testSubstitutionDescriptionUnknow() {
@@ -75,6 +123,17 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testSubstitutionDescriptionUnknowRoundTrip() {
+		String val = "Cys188?";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(188l).wildType("C").varType("?").variantType(VariantType.SUBSTITUTION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}
+	
 
 	@Test
 	public void testUnsupportedHgvsDescriptionWrong() {
@@ -99,6 +158,17 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testProteinDeletionSingleRoundTrip() {
+		String val = "Ala3del";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(3l).wildType("A").variantType(VariantType.DELETION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}
+	
 
 	@Test
 	public void testProteinDeletionSinglePred() {
@@ -112,6 +182,17 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
+	
+	
+	@Test
+	public void testProteinDeletionSinglePredRoundTrip() {
+		String val = "(Ala3del)";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(3l).wildType("A").varType("del").variantType(VariantType.DELETION).predicted(true);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinDeletionMulti() {
@@ -126,6 +207,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
+	
+	
+	@Test
+	public void testProteinDeletionMultiRoundTrip() {
+		String val = "Ala3_Ser5del";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(3l).end(5l).wildType("A").secondWildType("S")
+		.varType("del").variantType(VariantType.DELETION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}
+	
 
 	@Test
 	public void testProteinDeletionMulti2() {
@@ -141,6 +234,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
 	
+	
+	@Test
+	public void testProteinDeletionMulti2RoundTrip() {
+		String val = "Gly2_Met46del";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(2l).end(46l).wildType("G").secondWildType("M").varType("del")
+		.variantType(VariantType.DELETION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
+	
 	@Test
 	public void testProteinDeletionMulti3() {
 		String val = "Thr839_Lys862del";
@@ -154,6 +259,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.DELETION, hgvsDescription.getVariantType());
 	}
+	
+	
+	@Test
+	public void testProteinDeletionMulti3RoundTrip() {
+		String val = "Thr839_Lys862del";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(839l).end(862l).wildType("T").varType("del").secondWildType("K")
+		.variantType(VariantType.DELETION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}
+	
 
 	@Test
 	public void testProteinDuplicationSingle() {
@@ -168,6 +285,17 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 	}
+	
+	
+	@Test
+	public void testProteinDuplicationSingleRoundTrip() {
+		String val = "Ala3dup";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(3l).wildType("A").varType("dup").variantType(VariantType.DUPLICATION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinDuplicationSinglePred() {
@@ -182,6 +310,17 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 	}
+	
+	
+	@Test
+	public void testProteinDuplicationSinglePredRoundTrip() {
+		String val = "(Ala3dup)";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(3l).wildType("A").varType("dup").variantType(VariantType.DUPLICATION).predicted(true);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinDuplicationMulti() {
@@ -197,6 +336,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testProteinDuplicationMultiRoundTrip() {
+		String val = "Ala3_Ser5dup";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(3l).end(5l).wildType("A").secondWildType("S")
+		.varType("dup").variantType(VariantType.DUPLICATION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinInsert() {
@@ -213,6 +364,17 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());
 
 	}
+	
+	@Test
+	public void testProteinInsertRoundTrip() {
+		String val = "His4_Gln5insAlaSer";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(4l).end(5l).wildType("H").secondWildType("Q").varType("AS")
+		.variantType(VariantType.INSERTION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinInsert2() {
@@ -229,6 +391,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testProteinInsert2RoundTrip() {
+		String val = "(His4_Gln5insAla)";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(4l).end(5l).wildType("H").secondWildType("Q").varType("A")
+		.variantType(VariantType.INSERTION).predicted(true);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinInsertNumber() {
@@ -247,6 +421,20 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.INSERTION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testProteinInsertNumberRoundTrip() {
+		String val = "Arg78_Gly79ins23";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("", 23);
+		builder.start(78l).repeat(r).end(79l).wildType("R").secondWildType("G").varType("")
+		.variantType(VariantType.INSERTION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinDeletionInsertSingle() {
@@ -263,6 +451,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testProteinDeletionInsertSingleRoundTrip() {
+		String val = "Cys28delinsTrpVal";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(28l).wildType("C").varType("WV")
+		.variantType(VariantType.DELETION_INSERTION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinDeletionInsertMulti() {
@@ -279,6 +479,16 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());
 
 	}
+	
+	@Test
+	public void testProteinDeletionInsertMultiRoundTrip() {
+		String val = "Cys28_Lys29delinsTrp";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(28l).end(29l).wildType("C").secondWildType("K").varType("W")
+		.variantType(VariantType.DELETION_INSERTION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
 	
 	
 	@Test
@@ -299,6 +509,17 @@ public class HgvsProteinDescriptionParserTest {
 	
 	
 	@Test
+	public void testProteinDeletionInsertMultiOneLettRoundTrip() {
+		String val = "C177_P188delins*";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.stop("*").start(177l).end(188l).wildType("C").secondWildType("P")
+		.variantType(VariantType.DELETION_INSERTION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(false));
+	}	
+	
+	
+	@Test
 	public void testProteinInsertMultiOneLett() {
 		
 		String val = "A1009_R1010insAAF*Q*";
@@ -315,7 +536,16 @@ public class HgvsProteinDescriptionParserTest {
 
 	}
 	
-	
+	@Test
+	public void testProteinInsertMultiOneLettRoundTrip() {
+		
+		String val = "A1009_R1010insAAF*Q*";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(1009l).end(1010l).wildType("A").secondWildType("R").varType("AAF*Q*")
+		.variantType(VariantType.INSERTION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(false));
+	}	
 	
 
 	@Test
@@ -333,6 +563,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.DELETION_INSERTION, hgvsDescription.getVariantType());
 	}
+	
+	
+	@Test
+	public void testProteinDeletionInsertMulti2RoundTrip() {
+		String val = "(Glu125_Ala132delinsGlyLeuHisArgPheIleValLeu)";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(125l).end(132l).wildType("E").secondWildType("A").varType("GLHRFIVL")
+		.variantType(VariantType.DELETION_INSERTION).predicted(true);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinRepeatSingle() {
@@ -350,6 +592,20 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testProteinRepeatSingleRoundTrip() {
+		String val = "Gln18[23]";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("", 23);
+		builder.start(18l).wildType("Q").repeat(r)
+		.variantType(VariantType.REPEAT).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinRepeatMulti() {
@@ -366,6 +622,19 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.isParsed());
 		assertEquals(VariantType.REPEAT, hgvsDescription.getVariantType());
 	}
+	
+	@Test
+	public void testProteinRepeatMultiRoundTrip() {
+		String val = "Arg65_Ser67[12]";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("", 12);
+		builder.start(65l).end(67l).wildType("R").secondWildType("S").repeat(r)
+		.variantType(VariantType.REPEAT).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testRepeatDescriptionNotParsed() {
@@ -392,6 +661,17 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.hasTer());
 		assertTrue(hgvsDescription.hasFrameShift());
 	}
+	
+	
+	@Test
+	public void testProteinFrameshiftRoundTrip() {
+		String val = "Arg97ProfsTer23";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.stop("*23").start(97l).wildType("R").varType("P")
+		.variantType(VariantType.FRAMESHIFT).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
 
 	@Test
 	public void testProteinFrameshiftShort() {
@@ -400,7 +680,7 @@ public class HgvsProteinDescriptionParserTest {
 		assertFalse(hgvsDescription.isPredicted());
 		assertEquals(97l, hgvsDescription.getStart().longValue());
 		assertEquals("R", hgvsDescription.getWildType());
-		assertEquals("*", hgvsDescription.getVarType());
+		assertEquals("", hgvsDescription.getVarType());
 		// assertEquals(23, hgvsDescription.getEnd().longValue());
 		assertEquals(val, hgvsDescription.getValue());
 		assertTrue(hgvsDescription.isParsed());
@@ -409,6 +689,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.hasFrameShift());
 
 	}
+	
+	
+	@Test
+	public void testProteinFrameshiftShortRoundTrip() {
+		String val = "Arg97fs";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.frameShift("fs").start(97l).wildType("R").varType("")
+		.variantType(VariantType.FRAMESHIFT).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinFrameshift2() {
@@ -426,6 +718,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.hasFrameShift());
 
 	}
+	
+	
+	@Test
+	public void testProteinFrameshift2RoundTrip() {
+		String val = "Pro633Leufs";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.start(633l).wildType("P").varType("L")
+		.variantType(VariantType.FRAMESHIFT).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testProteinTerFrameshift() {
@@ -444,6 +748,18 @@ public class HgvsProteinDescriptionParserTest {
 
 	}
 	
+	@Test
+	public void testProteinTerFrameshiftRoundTrip() {
+		String val = "*194Mfs*15";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.stop("*15").start(194l).wildType("*").varType("M")
+		.variantType(VariantType.FRAMESHIFT).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
+	
+	
 	
 	@Test
 	public void testProteinFrameshiftPred() {
@@ -460,6 +776,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertTrue(hgvsDescription.hasTer());
 		assertTrue(hgvsDescription.hasFrameShift());
 	}
+	
+	
+	@Test
+	public void testProteinFrameshiftPredRoundTrip() {
+		String val = "(Gln151Thrfs*9)";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		builder.stop("*9").start(151l).wildType("Q").varType("T")
+		.variantType(VariantType.FRAMESHIFT).predicted(true);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(false));
+	}	
+	
 
 	@Test
 	public void testExtensionMet() {
@@ -479,6 +807,20 @@ public class HgvsProteinDescriptionParserTest {
 		assertFalse(hgvsDescription.hasFrameShift());
 
 	}
+	
+	
+	@Test
+	public void testExtensionMetRoundTrip() {
+		String val = "Met1ext-5";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("*", -5);
+		builder.start(1l).repeat(r).wildType("M").varType("?")
+		.variantType(VariantType.EXTENSION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testExtensionMet2() {
@@ -497,6 +839,21 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testExtensionMet2RoundTrip() {
+		String val = "Met1Valext-12";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("*", -12);
+		builder.start(1l).repeat(r).wildType("M").varType("V")
+		.variantType(VariantType.EXTENSION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
+	
 
 	@Test
 	public void testExtensionTer() {
@@ -514,6 +871,20 @@ public class HgvsProteinDescriptionParserTest {
 		assertEquals(VariantType.EXTENSION, hgvsDescription.getVariantType());
 
 	}
+	
+	
+	@Test
+	public void testExtensionTerRoundTrip() {
+		String val = "Ter110GlnextTer17";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("*", 17);
+		builder.start(110l).repeat(r).wildType("*").varType("Q")
+		.variantType(VariantType.EXTENSION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testExtensionTerWithStar() {
@@ -533,6 +904,20 @@ public class HgvsProteinDescriptionParserTest {
 		assertFalse(hgvsDescription.hasFrameShift());
 
 	}
+	
+	@Test
+	public void testExtensionTerWithStarRoundTrip() {
+		String val = "*110Glnext*17";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("*", 17);
+		builder.start(110l).repeat(r).wildType("*").varType("Q")
+		.variantType(VariantType.EXTENSION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
+	
 
 	@Test
 	public void testExtensionLettersTer() {
@@ -552,6 +937,19 @@ public class HgvsProteinDescriptionParserTest {
 		assertFalse(hgvsDescription.hasFrameShift());
 
 	}
+	
+	@Test
+	public void testExtensionLettersTerRoundTrip() {
+		String val = "(Ter315TyrextAsnLysGlyThrTer)";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("NKGT*", null);
+		builder.start(315l).repeat(r).wildType("*").varType("Y")
+		.variantType(VariantType.EXTENSION).predicted(true);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+	}	
+	
 
 	@Test
 	public void testExtensionLettersTerQuestion() {
@@ -571,5 +969,18 @@ public class HgvsProteinDescriptionParserTest {
 		assertFalse(hgvsDescription.hasFrameShift());
 		
 
+	}
+	
+	@Test
+	public void testExtensionLettersTerQuestionRoundTrip() {
+		String val = "Ter327Argext*?";
+		HgvsProteinDescriptionImpl.Builder builder = HgvsProteinDescriptionImpl.builder();
+		AbstractMap.SimpleEntry<String, Integer> r 
+		= new AbstractMap.SimpleEntry<String, Integer>("*?", -1);
+		builder.start(327l).repeat(r).wildType("*").varType("R")
+		.variantType(VariantType.EXTENSION).predicted(false);
+		HgvsProteinDescripton hgvsDescription = builder.build();
+		assertEquals(val,hgvsDescription.getDisplayValue(true));
+		
 	}
 }

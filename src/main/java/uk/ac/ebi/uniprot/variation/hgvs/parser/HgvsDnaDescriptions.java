@@ -87,9 +87,9 @@ public class HgvsDnaDescriptions {
 	}
 
 	private static HgvsDescription parseSubstitutionDescription(String val) {
+		
 		Matcher matcher = HgvsDnaDescriptions.HGVS_SUBSTITUTION_PATTERN.matcher(val);
 		if (matcher.matches()) {
-
 			HgvsDescriptionImpl.Builder builder = HgvsDescriptionImpl.builder();
 			builder.predicted(matcher.group(1) != null).start(Long.parseLong(matcher.group(2)))
 					.wildType(matcher.group(3)).varType(matcher.group(5)).variantType(VariantType.SUBSTITUTION).value(val)

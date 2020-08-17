@@ -1,17 +1,15 @@
 package uk.ac.ebi.uniprot.variation.hgvs.impl;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-//import lombok.Builder;
-//import lombok.Data;
-//import lombok.Singular;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
 import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
-//@Builder(builderClassName = "HgvsDescriptionBuilder")
-//@Data
+
 public class HgvsDescriptionImpl implements HgvsDescription {
 	private final boolean predicted;
 	private final String wildType;
@@ -21,16 +19,14 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	private final Long end;
 	private final Long endCross;
 	private final String secondWildType;
-//	private final Long secondStart;
+
 	private final VariantType variantType;
 	private final String value;
 	private final boolean parsed;
 	private final String conversionSeqId;
 	private final List<Map.Entry<String, Integer> > repeats;
 	
-	/*public static <HgvsDescriptionImpl> Builder<HgvsDescriptionImpl> builder() {
-		return new Builder<HgvsDescriptionImpl>();
-	}*/
+
 	
 	
 	public static Builder<?> builder() {
@@ -186,6 +182,57 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	@Override
 	public List<Entry<String, Integer>> getRepeats() {
 		return repeats;
+	}
+
+	/*
+	 * String val = "4072+1234_5155+246del";
+		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
+		assertEquals(4072l, hgvsDescription.getStart().longValue());
+		assertEquals(1234, hgvsDescription.getStartCross().longValue());
+		assertEquals(5155l, hgvsDescription.getEnd().longValue());
+		assertEquals(246l, hgvsDescription.getEndCross().longValue());
+		assertEquals(val, hgvsDescription.getValue());
+		
+		private final String conversionSeqId;
+	private final List<Map.Entry<String, Integer> > repeats;
+		
+	 */
+
+	@Override
+	public String getDisplayValue(boolean threeLett) {
+		if(null == this.value) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(this.start);
+			if(null != this.startCross) {
+				sb.append("+").append(this.startCross);
+			}
+			if(null != this.end) {
+				sb.append("_").append(this.end);
+			}
+			if(null != this.endCross) {
+				sb.append("+").append(this.endCross);
+			}
+			if(null != this.conversionSeqId) {
+				sb.append(this.conversionSeqId);
+			} else if(null != repeats) {
+				for (Entry<String, Integer> entry : repeats) {
+					sb.append(entry.getKey()).append("[").append(entry.getValue()).append("]");
+				}
+			}
+			else {
+				if(null != this.wildType) {
+					sb.append(this.wildType);
+				}
+				if(this.variantType.equals(VariantType.SUBSTITUTION)) {
+					sb.append(">");
+				}
+				if(null != this.varType) {
+					sb.append(this.varType);
+				}
+			}
+			return sb.toString();
+		}
+		return this.value;
 	}
 	
 	
