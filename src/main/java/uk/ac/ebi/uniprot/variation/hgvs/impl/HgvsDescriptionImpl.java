@@ -245,7 +245,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 		sb.append(this.start);
 		if (this.startCross != null)
 			sb.append("+").append(this.startCross);
-		if (this.start != this.end)
+		if (!this.start.equals(this.end))
 			sb.append("_").append(this.end);
 		if (this.endCross != null)
 			sb.append("+").append(this.endCross);
