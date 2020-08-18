@@ -39,7 +39,7 @@ public class VariationUtilTest {
     public void testConvert3letter2oneLetterAminoAcidDel(){
         String data ="Del";
         String converted =VariationUtil.convertThreeLetterAminoAcid2OneLetter(data);
-        assertEquals("-", converted);
+        assertEquals("del", converted);
     }
     @Test
     public void testConvertMulti3letter2oneLetterAminoAcid(){
