@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
 import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
@@ -245,7 +246,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 		sb.append(this.start);
 		if (this.startCross != null)
 			sb.append("+").append(this.startCross);
-		if (this.start != this.end)
+		if (!Objects.equals(this.start, this.end))
 			sb.append("_").append(this.end);
 		if (this.endCross != null)
 			sb.append("+").append(this.endCross);
@@ -271,7 +272,8 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 			sb.append("inv");
 			break;
 		default:
-			sb.append(this.wildType).append(">").append(disVarType);
+			if(this.wildType != null && disVarType != null)
+				sb.append(this.wildType).append(">").append(disVarType);
 			break;
 		}
 		return sb.toString();
