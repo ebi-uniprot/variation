@@ -27,6 +27,7 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 	private final String conversionSeqId;
 	private final List<Map.Entry<String, Integer> > repeats;
 	
+	
 
 	
 	
@@ -188,92 +189,43 @@ public class HgvsDescriptionImpl implements HgvsDescription {
 		return repeats;
 	}
 
-	/*
-	 * String val = "4072+1234_5155+246del";
-		HgvsDescription hgvsDescription = HgvsDnaDescriptions.parseHgvsDescription(val);
-		assertEquals(4072l, hgvsDescription.getStart().longValue());
-		assertEquals(1234, hgvsDescription.getStartCross().longValue());
-		assertEquals(5155l, hgvsDescription.getEnd().longValue());
-		assertEquals(246l, hgvsDescription.getEndCross().longValue());
-		assertEquals(val, hgvsDescription.getValue());
-		
-		private final String conversionSeqId;
-	private final List<Map.Entry<String, Integer> > repeats;
-		
-	 */
-
-//	@Override
-//	public String getDisplayValue() {
-//		
-//			StringBuilder sb = new StringBuilder();
-//			sb.append(this.start);
-//			if(null != this.startCross) {
-//				sb.append("+").append(this.startCross);
-//			}
-//			if(null != this.end) {
-//				sb.append("_").append(this.end);
-//			}
-//			if(null != this.endCross) {
-//				sb.append("+").append(this.endCross);
-//			}
-//			if(null != this.conversionSeqId) {
-//				sb.append(this.conversionSeqId);
-//			} else if(null != repeats) {
-//				for (Entry<String, Integer> entry : repeats) {
-//					sb.append(entry.getKey()).append("[").append(entry.getValue()).append("]");
-//				}
-//			}
-//			else {
-//				if(null != this.wildType) {
-//					sb.append(this.wildType);
-//				}
-//				if(this.variantType.equals(VariantType.SUBSTITUTION)) {
-//					sb.append(">");
-//				}
-//				if(null != this.varType) {
-//					sb.append(this.varType);
-//				}
-//			}
-//			return sb.toString();
-//		
-//	}
+	
 	
 	private String getDisplayValue() {
-		if (null != this.value)
-			return this.value;
-
+	
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.start);
 		if (this.startCross != null)
-			sb.append("+").append(this.startCross);
+			sb.append(PLUS).append(this.startCross);
 		if (!Objects.equals(this.start, this.end))
-			sb.append("_").append(this.end);
+			sb.append(UNDERSCORE).append(this.end);
 		if (this.endCross != null)
-			sb.append("+").append(this.endCross);
+			sb.append(PLUS).append(this.endCross);
 		String disVarType = this.varType;
 		VariantType variantType = this.getVariantType();
 		switch (variantType) {
 		case INSERTION:
-			sb.append("ins").append(disVarType);
+			sb.append(INSERTION).append(disVarType);
 			break;
 		case DELETION:
-			sb.append("del");
+			sb.append(DELETION);
 			break;
 		case SUBSTITUTION:
-			sb.append(this.wildType).append(">").append(disVarType);
+			sb.append(this.wildType).append(GREATER_THAN).append(disVarType);
 			break;
 		case DUPLICATION:
-			sb.append("dup");
+			sb.append(DUPLICATION);
 			break;
 		case DELETION_INSERTION:
-			sb.append("delins").append(disVarType);
+			sb.append(DELETION_INSERTION).append(disVarType);
 			break;
 		case INVERSION:
-			sb.append("inv");
+			sb.append(INVERSION);
 			break;
 		default:
 			if(this.wildType != null && disVarType != null)
-				sb.append(this.wildType).append(">").append(disVarType);
+				sb.append(this.wildType).append(GREATER_THAN).append(disVarType);
 			break;
 		}
 		return sb.toString();
