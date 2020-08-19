@@ -6,7 +6,7 @@
 		<version>1.0</version>
 		<relativePath>../unp.fw.uniprot-ujdk-parent</relativePath>
 	</parent>
-	<version>2020.5-SNAPSHOT</version>
+	<version>2020.5-SNAPSHOP</version>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>variation-common</artifactId>
 	<name>variation-common</name>
