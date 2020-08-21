@@ -33,6 +33,54 @@ public class HgvssTest {
 		verify(hgvs, "ENSMUST00000082421.1", HgvsType.CDNA, "115G>A", val);
 	}
 
+	
+	
+	@Test
+	public void testDashAndVersionHgvs() {
+		String val = "AAEL019493-PA.1:p.Lys196Arg";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "AAEL019493-PA.1", HgvsType.PROTEIN, "Lys196Arg", val);
+	}
+	
+	
+	
+	@Test
+	public void testDelExtTerHgvs1() {
+		String val = "ENSGALP00000006654.5:p.LeuTer533delextTer?";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "ENSGALP00000006654.5", HgvsType.PROTEIN, "LeuTer533delextTer?", val);
+	}
+	
+	@Test
+	public void testDelExtTerHgvs2() {
+		String val = "ENSCAFP00000001124.4:p.SerLeuTer1772delextTer71";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "ENSCAFP00000001124.4", HgvsType.PROTEIN, "SerLeuTer1772delextTer71", val);
+	}
+	
+	
+	@Test
+	public void testDelExtTerHgvs3() {
+		String val = "Solyc01g103530.3.1:p.AsnLeuValTer993delextTer43";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "Solyc01g103530.3.1", HgvsType.PROTEIN, "AsnLeuValTer993delextTer43", val);
+	}
+	
+	@Test
+	public void testDelExtTerHgvs4() {
+		String val = "Solyc11g071330.2.1:p.LysGluTer213delextTer16";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "Solyc11g071330.2.1", HgvsType.PROTEIN, "LysGluTer213delextTer16", val);
+	}
+	
+	
+	@Test//(expected = InvalidHgvsException.class)
+	public void testBadHgvs() {
+		String val = "Solyc04g025035.1.1:p.Met1_?3";
+		Hgvs hgvs = Hgvss.from(val,true);
+		verify(hgvs, "Solyc04g025035.1.1", HgvsType.PROTEIN, "Met1_?3", val);
+	}
+	
 	@Test
 	public void testFromProteinHgvs() {
 		String val = "NP_003997.1:p.(Trp24Cys)";

@@ -39,7 +39,9 @@ public class VariationUtil {
             }
             end += 3;
             if(end> aa.length()) {
-            	throw new InvalidHgvsException(aa + " is not proper hreeLetterAminoAcid");
+            	end = aa.length();
+            	
+            	//throw new InvalidHgvsException(aa + " is not proper hreeLetterAminoAcid");
            
             }
         }
