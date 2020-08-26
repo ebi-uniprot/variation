@@ -1,5 +1,8 @@
 package uk.ac.ebi.uniprot.variation.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsProteinDescripton;
 import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
@@ -7,11 +10,11 @@ import uk.ac.ebi.uniprot.variation.hgvs.VariantType;
 
 public class VariationUtil {
     
-    private static final String DEL2 = "Del";
+   // private static final String DEL2 = "Del";
     private static final String DASH = "-";
     private static final String DEL = "del";
     private static final String EQUALS = "=";
-    
+    private static final String EMPTY = "";
     
     private VariationUtil() {}
 
@@ -23,7 +26,7 @@ public class VariationUtil {
         }
         if (aa.length() < 3) {
         	AminoAcid aminoAcid = AminoAcid.valueOfOneLetterCode(aa);
-        	return validateAminoAcid(aminoAcid);
+        	return validateAminoAcid(aminoAcid, aa);
         }
         int start = 0;
         int end = 3;
@@ -31,7 +34,7 @@ public class VariationUtil {
         while (start < aa.length()) {
             String threeLetter = aa.substring(start, end);
             AminoAcid aminoAcid = AminoAcid.valueOfThreeLetterCode(threeLetter);
-            sb.append(validateAminoAcid(aminoAcid));
+            sb.append(validateAminoAcid(aminoAcid,aa));
            
             start = end;
             if(start>=aa.length()) {
@@ -41,16 +44,17 @@ public class VariationUtil {
             if(end> aa.length()) {
             	end = aa.length();
             	
-            	//throw new InvalidHgvsException(aa + " is not proper hreeLetterAminoAcid");
+            	
            
             }
         }
         return sb.toString();
     }
     
-    private static String validateAminoAcid(AminoAcid aa) {
+    private static String validateAminoAcid(AminoAcid aa, String original) {
     	if (aa == AminoAcid.UNKNOWN) {
-            return DASH;
+    		new InvalidHgvsException(aa + " is not proper threeLetterAminoAcid it was found in " + original + " when converting 3 letter code to 1 letter code.");
+            return EMPTY;
         } else {
            return aa.getOneLetterCode();
         }
