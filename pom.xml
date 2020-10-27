@@ -3,10 +3,10 @@
 	<parent>
 		<artifactId>ujdk-parent</artifactId>
 		<groupId>uk.ac.ebi.uniprot</groupId>
-		<version>1.0</version>
+		<version>2021.2.99-SNAPSHOT</version>
 		<relativePath>../unp.fw.uniprot-ujdk-parent</relativePath>
 	</parent>
-	<version>2.0.1</version>
+	<version>2021.2.99-SNAPSHOT</version>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>variation-common</artifactId>
 	<name>variation-common</name>
@@ -64,32 +64,10 @@
 	<build>
 	<plugins>
 		<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
-<!-- 				<configuration> -->
-<!-- 					<release>9</release> -->
-<!-- 				</configuration> -->
-			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-toolchains-plugin</artifactId> -->
-<!-- 				<configuration> -->
-<!-- 					<toolchains> -->
-<!-- 						<jdk> -->
-<!-- 							<version>1.9</version> -->
-<!-- 							<vendor>oracle</vendor> -->
-<!-- 						</jdk> -->
-<!-- 					</toolchains> -->
-<!-- 				</configuration> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<goals> -->
-<!-- 							<goal>toolchain</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-		</plugins>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+		</plugin>
+	</plugins>
 	</build>
 
 </project>
