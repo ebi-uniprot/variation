@@ -4,7 +4,6 @@
 		<artifactId>ujdk-parent</artifactId>
 		<groupId>uk.ac.ebi.uniprot</groupId>
 		<version>2.0</version>
-		<relativePath>../unp.fw.uniprot-ujdk-parent</relativePath>
 	</parent>
 	<version>2021.3-SNAPSHOT</version>
 	<modelVersion>4.0.0</modelVersion>
