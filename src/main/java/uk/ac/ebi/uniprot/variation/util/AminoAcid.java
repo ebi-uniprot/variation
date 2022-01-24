@@ -1,43 +1,27 @@
 package uk.ac.ebi.uniprot.variation.util;
 
 /**
- * Enum representation of amino acids. Nothing fancy, just the one and three letter codes.
+ * Enum representation of amino acids. Nothing fancy, just the one and three
+ * letter codes.
  *
  * @author Jules Jacobsen <jacobsen@ebi.ac.uk>
  */
 public enum AminoAcid {
 
-    ALANINE("ALA", "A", true, "Ala"),
-    ASPARTIC_ACID("ASX", "B", true, "Asx"),
-    CYSTEINE("CYS", "C", true, "Cys"),
-    ASPARTATE("ASP", "D", true, "Asp"),
-    GLUTAMATE("GLU", "E", true, "Glu"),
-    PHENYLALANINE("PHE", "F", true, "Phe"),
-    GLYCINE("GLY", "G", true, "Gly"),
-    HISTIDINE("HIS", "H", true, "His"),
-    ISOLEUCINE("ILE", "I", true, "Ile"),
-    LYSINE("LYS", "K", true, "Lys"),
-    LEUCINE("LEU", "L", true, "Leu"),
-    METHIONINE("MET", "M", true, "Met"),
-    ASPARAGINE("ASN", "N", true, "Asn"),
-    PROLINE("PRO", "P", true, "Pro"),
-    GLUTAMINE("GLN", "Q", true, "Gln"),
-    ARGININE("ARG", "R", true, "Arg"),
-    SERINE("SER", "S", true, "Ser"),
-    THREONINE("THR", "T", true, "Thr"),
-    VALINE("VAL", "V", true, "Val"),
-    TRYPTOPHAN("TRP", "W", true, "Trp"),
-    TYROSINE("TYR", "Y", true, "Tyr"),
+    ALANINE("ALA", "A", true, "Ala"), ASPARTIC_ACID("ASX", "B", true, "Asx"), CYSTEINE("CYS", "C", true, "Cys"),
+    ASPARTATE("ASP", "D", true, "Asp"), GLUTAMATE("GLU", "E", true, "Glu"), PHENYLALANINE("PHE", "F", true, "Phe"),
+    GLYCINE("GLY", "G", true, "Gly"), HISTIDINE("HIS", "H", true, "His"), ISOLEUCINE("ILE", "I", true, "Ile"),
+    LYSINE("LYS", "K", true, "Lys"), LEUCINE("LEU", "L", true, "Leu"), METHIONINE("MET", "M", true, "Met"),
+    ASPARAGINE("ASN", "N", true, "Asn"), PROLINE("PRO", "P", true, "Pro"), GLUTAMINE("GLN", "Q", true, "Gln"),
+    ARGININE("ARG", "R", true, "Arg"), SERINE("SER", "S", true, "Ser"), THREONINE("THR", "T", true, "Thr"),
+    VALINE("VAL", "V", true, "Val"), TRYPTOPHAN("TRP", "W", true, "Trp"), TYROSINE("TYR", "Y", true, "Tyr"),
     GLUTAMIC_ACID("GLX", "Z", true, "Glx"),
 
     // non-standards
     // MSE isn't natural, but for the purposes of X-ray crystallography, it is.
-    SELENOMETHIONINE("MSE", "M", true, "Mse"),
-    SELENOCYSTEINE("CSE", "U", false, "Cse"),
-    PYRROLYSINE("PYR", "O", false, "Pyr"),
-    TER("TER", "*", false, "Ter"),
-    SILENT("=","=",false,"="),
-    QUESTION("?","?",false,"?"),
+    SELENOMETHIONINE("MSE", "M", true, "Mse"), SELENOCYSTEINE("CSE", "U", false, "Cse"),
+    PYRROLYSINE("PYR", "O", false, "Pyr"), TER("TER", "*", false, "Ter"), SILENT("=", "=", false, "="),
+    QUESTION("?", "?", false, "?"),
     // for when you just don't know...
     UNKNOWN("UNK", "X", false, "Unk");
 

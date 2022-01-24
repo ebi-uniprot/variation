@@ -1,19 +1,22 @@
 package uk.ac.ebi.uniprot.variation;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import uk.ac.ebi.uniprot.variation.Allele;
+import org.junit.jupiter.api.Test;
+
 import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
-
-import static org.junit.Assert.*;
 
 public class AlleleTest {
     @Test
     public void testEmpty() {
         String alleleStr = "";
         Allele allele = Allele.from(alleleStr);
-        assertNull(allele);    
+        assertNull(allele);
     }
+
     @Test
     public void testSimple() {
         String alleleStr = "A/C";
@@ -24,6 +27,7 @@ public class AlleleTest {
         assertEquals("C", allele.getFirstVarType());
         assertEquals(alleleStr, allele.toString());
     }
+
     @Test
     public void testSingle() {
         String alleleStr = "A";
@@ -34,6 +38,7 @@ public class AlleleTest {
         assertEquals("-", allele.getFirstVarType());
         assertEquals("A/-", allele.toString());
     }
+
     @Test
     public void testMulti() {
         String alleleStr = "A/C/D";
@@ -45,19 +50,18 @@ public class AlleleTest {
         assertEquals("D", allele.getVarType().get(1));
         assertEquals(alleleStr, allele.toString());
     }
-    
+
     @Test
     public void testFromHgvs() {
-    		String hgvs ="ENSMUST00000082421.1:c.115G>A";
-    		Allele allele = Allele.fromHgvs(hgvs);
-    		 assertEquals("G", allele.getWildType());
-    	        assertEquals(1, allele.getVarType().size());
-    	        assertEquals("A", allele.getVarType().get(0));
-    	        assertEquals("A", allele.getFirstVarType());
-    	        assertEquals("G/A", allele.toString());
+        String hgvs = "ENSMUST00000082421.1:c.115G>A";
+        Allele allele = Allele.fromHgvs(hgvs);
+        assertEquals("G", allele.getWildType());
+        assertEquals(1, allele.getVarType().size());
+        assertEquals("A", allele.getVarType().get(0));
+        assertEquals("A", allele.getFirstVarType());
+        assertEquals("G/A", allele.toString());
     }
-    
-    
+
     @Test
     public void testAlleleFromHgvsEmpty() {
         String genomeHgvs = "";
@@ -76,13 +80,13 @@ public class AlleleTest {
         assertEquals("C", allele.getWildType());
         assertEquals("A", allele.getFirstVarType());
     }
-    
 
-    @Test(expected=InvalidHgvsException.class)
+    @Test
     public void testAlleleFromHgvsWrong() {
         String genomeHgvs = "NC_000081.6.82616099C>A";
-        Allele allele = Allele.fromHgvs(genomeHgvs);
-        assertNull(allele);
+        assertThrows(InvalidHgvsException.class, () -> {
+            Allele.fromHgvs(genomeHgvs);
+        });
     }
 
     @Test

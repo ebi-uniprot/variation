@@ -32,8 +32,7 @@ public class VCFFileReader {
 
     public VCFMeta readMetaData() {
         List<String> data = new ArrayList<>();
-        try (BufferedReader reader =
-                new BufferedReader(new InputStreamReader(new FileInputStream(filename)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename)))) {
             String line = null;
             boolean hasColumn = false;
             while ((line = reader.readLine()) != null) {

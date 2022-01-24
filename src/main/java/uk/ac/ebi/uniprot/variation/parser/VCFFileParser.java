@@ -18,11 +18,8 @@ public final class VCFFileParser {
     public static VariantCallFormat parseVCFLine(String data) {
         String[] tokens = data.split(TAB);
         VariantCallFormatImpl.Builder builder = VariantCallFormatImpl.builder();
-        builder.chromosome(transform(tokens[0]))
-                .position(Integer.parseInt(tokens[1]))
-                .id(transform(tokens[2]))
-                .referenceBase(transform(tokens[3]))
-                .alternativeAlleles(transform(tokens[4]));
+        builder.chromosome(transform(tokens[0])).position(Integer.parseInt(tokens[1])).id(transform(tokens[2]))
+                .referenceBase(transform(tokens[3])).alternativeAlleles(transform(tokens[4]));
 
         if (tokens.length > 5) {
             if (!STOP.equals(tokens[5])) {
@@ -54,8 +51,8 @@ public final class VCFFileParser {
     }
 
     private static Map<String, String> transformInfoStr(String infoStr) {
-    
-        if ((infoStr == null) || (infoStr.isEmpty()) ||STOP.equals(infoStr) )
+
+        if ((infoStr == null) || (infoStr.isEmpty()) || STOP.equals(infoStr))
             return Collections.emptyMap();
         String[] pairs = infoStr.split(";");
         Map<String, String> info = new HashMap<>();
