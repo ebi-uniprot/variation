@@ -31,15 +31,43 @@
 		</dependency>
 	</dependencies>
 	<build>
-	<plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.8.1</version>
-		        <configuration>
-		          <release>${java.version}</release>
-		        </configuration>
-		</plugin>
-	</plugins>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+			        <configuration>
+			          <release>${java.version}</release>
+			        </configuration>
+			</plugin>
+		</plugins>
 	</build>
+	<repositories>
+	    <repository>
+	      <id>uniprot-artifactory-release</id>
+	      <name>UniProt Artifactory for Releases</name>
+	      <releases>
+	        <enabled>true</enabled>
+	        <updatePolicy>always</updatePolicy>
+	        <checksumPolicy>warn</checksumPolicy>
+	      </releases>
+	      <snapshots>
+	        <enabled>false</enabled>
+	      </snapshots>
+	      <url>https://www.ebi.ac.uk/uniprot/artifactory/release</url>
+	    </repository>
+	
+	    <repository>
+	      <id>uniprot-artifactory-snapshots</id>
+	      <name>UniProt Artifactory for Snapshots</name>
+	      <releases>
+	        <enabled>false</enabled>
+	      </releases>
+	      <snapshots>
+	        <enabled>true</enabled>
+	        <checksumPolicy>warn</checksumPolicy>
+	      </snapshots>
+	      <url>https://www.ebi.ac.uk/uniprot/artifactory/snapshot</url>
+	    </repository>
+	</repositories>
 </project>
