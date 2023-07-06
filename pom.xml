@@ -8,6 +8,10 @@
 	<name>variation-common</name>
 	<description>Common module for variation</description>
 
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
