@@ -187,7 +187,7 @@ public class VariantCallFormatImpl implements VariantCallFormat {
         result = prime * result + ((filter == null) ? 0 : filter.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((info == null) ? 0 : info.hashCode());
-        result = prime * result + (int) (position ^ (position >>> 32));
+        result = prime * result + position;
         result = prime * result + ((qualityScore == null) ? 0 : qualityScore.hashCode());
         result = prime * result + ((referenceBase == null) ? 0 : referenceBase.hashCode());
         result = prime * result + ((sampleFormat == null) ? 0 : sampleFormat.hashCode());
@@ -253,5 +253,7 @@ public class VariantCallFormatImpl implements VariantCallFormat {
             return false;
         return true;
     }
+
+ 
 
 }
