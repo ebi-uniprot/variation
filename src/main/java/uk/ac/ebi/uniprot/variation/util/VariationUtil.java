@@ -51,8 +51,9 @@ public class VariationUtil {
 
     private static String validateAminoAcid(AminoAcid aa, String original) {
         if (aa == AminoAcid.UNKNOWN) {
-            throw new InvalidHgvsException(aa + " is not proper threeLetterAminoAcid it was found in " + original
-                    + " when converting 3 letter code to 1 letter code.");
+         //   throw new InvalidHgvsException(aa + " is not proper threeLetterAminoAcid it was found in " + original
+         //           + " when converting 3 letter code to 1 letter code.");
+            return "";
         } else {
             return aa.getOneLetterCode();
         }
