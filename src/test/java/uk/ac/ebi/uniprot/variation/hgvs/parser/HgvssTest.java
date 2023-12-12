@@ -102,6 +102,16 @@ public class HgvssTest {
         Hgvs hgvs = Hgvss.from(val, false);
         verify(hgvs, "NM_004006.1", HgvsType.RNA, "14a>c", val);
     }
+    
+    @Test
+    public void testFromRnaHgvsWithBracket() {
+        String val = "NM_000277.1(PAH):c.1097C>A";
+        Hgvs hgvs = Hgvss.from(val, false);
+        verify(hgvs, "NM_000277.1", HgvsType.CDNA, "1097C>A", "NM_000277.1:c.1097C>A");
+    }
+    
+    
+    
 
     private void verify(Hgvs hgvs, String seqId, HgvsType seqType, String description, String value) {
         assertEquals(seqId, hgvs.getSequenceId());
