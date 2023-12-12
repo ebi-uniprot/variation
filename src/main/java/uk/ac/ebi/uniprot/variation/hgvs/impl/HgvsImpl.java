@@ -19,6 +19,9 @@ public class HgvsImpl implements Hgvs {
 
     @Override
     public String toString() {
+        if((sequenceId ==null) || sequenceId.isBlank()) {
+            return  type.getId() + "." + description.getValue();
+        }else
         return sequenceId + ":" + type.getId() + "." + description.getValue();
     }
 

@@ -110,6 +110,20 @@ public class HgvssTest {
         verify(hgvs, "NM_000277.1", HgvsType.CDNA, "1097C>A", "NM_000277.1:c.1097C>A");
     }
     
+    @Test
+    public void testFromRnaHgvsWithBracket2() {
+        String val = "NM_001754.4(RUNX1):c.*1683_*1684del";
+        Hgvs hgvs = Hgvss.from(val, false);
+        verify(hgvs, "NM_001754.4", HgvsType.CDNA, "*1683_*1684del", "NM_001754.4:c.*1683_*1684del");
+    }
+    
+    
+    @Test
+    public void testFromRnaHgvs2() {
+        String val = "p.Val589Ter";
+        Hgvs hgvs = Hgvss.from(val, true);
+        verify(hgvs, "", HgvsType.PROTEIN, "Val589Ter", val);
+    }
     
     
 
