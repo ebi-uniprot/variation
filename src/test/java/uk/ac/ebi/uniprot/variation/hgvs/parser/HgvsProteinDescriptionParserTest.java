@@ -894,4 +894,18 @@ public class HgvsProteinDescriptionParserTest {
         assertEquals(val, hgvsDescription.getValue());
 
     }
+    
+    @Test
+    public void testSubstitutionDescriptionMissense2() {
+        String val = "Sec667Leu";
+        HgvsProteinDescripton hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val, true);
+
+        assertFalse(hgvsDescription.isPredicted());
+        assertEquals(667l, hgvsDescription.getStart().longValue());
+        assertEquals("U", hgvsDescription.getWildType());
+        assertEquals("L", hgvsDescription.getVarType());
+        assertEquals(val, hgvsDescription.getValue());
+        assertTrue(hgvsDescription.isParsed());
+        assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
+    }
 }

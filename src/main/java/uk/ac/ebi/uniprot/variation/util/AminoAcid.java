@@ -19,7 +19,7 @@ public enum AminoAcid {
 
     // non-standards
     // MSE isn't natural, but for the purposes of X-ray crystallography, it is.
-    SELENOMETHIONINE("MSE", "M", true, "Mse"), SELENOCYSTEINE("CSE", "U", false, "Cse"),
+    SELENOMETHIONINE("MSE", "M", true, "Mse"), SELENOCYSTEINE("SEC", "U", false, "Sec"),
     PYRROLYSINE("PYR", "O", false, "Pyr"), TER("TER", "*", false, "Ter"), SILENT("=", "=", false, "="),
     QUESTION("?", "?", false, "?"),
     // for when you just don't know...
