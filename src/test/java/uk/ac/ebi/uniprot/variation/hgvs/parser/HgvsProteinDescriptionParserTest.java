@@ -254,6 +254,7 @@ public class HgvsProteinDescriptionParserTest {
         assertFalse(hgvsDescription.isPredicted());
         assertEquals(3l, hgvsDescription.getStart().longValue());
         assertEquals("A", hgvsDescription.getWildType());
+        assertEquals("AA", hgvsDescription.getVarType());
         assertEquals(null, hgvsDescription.getSecondWildType());
         // assertEquals(46l, hgvsDescription.getEnd().longValue());
         assertEquals(val, hgvsDescription.getValue());
@@ -908,4 +909,22 @@ public class HgvsProteinDescriptionParserTest {
         assertTrue(hgvsDescription.isParsed());
         assertEquals(VariantType.SUBSTITUTION, hgvsDescription.getVariantType());
     }
+    
+   
+    @Test
+    public void testProteinDuplicationMulti2() {
+        String val = "Q417_Q421dup";
+        HgvsProteinDescripton hgvsDescription = HgvsProteinDescriptions.parseHgvsDescription(val, false);
+        assertFalse(hgvsDescription.isPredicted());
+        assertEquals(3l, hgvsDescription.getStart().longValue());
+        assertEquals("A", hgvsDescription.getWildType());
+        assertEquals("S", hgvsDescription.getSecondWildType());
+        assertEquals(5l, hgvsDescription.getEnd().longValue());
+        assertEquals(val, hgvsDescription.getValue());
+        assertTrue(hgvsDescription.isParsed());
+        assertEquals(VariantType.DUPLICATION, hgvsDescription.getVariantType());
+
+    }
+    
+    
 }

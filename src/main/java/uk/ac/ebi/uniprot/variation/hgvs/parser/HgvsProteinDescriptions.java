@@ -135,6 +135,8 @@ public class HgvsProteinDescriptions {
             if (matcher.group(6) != null) {
                 String wt2 = threeLett ? convertAAs.apply(matcher.group(6)) : matcher.group(6);
                 builder.secondWildType(wt2);
+            }else {
+                builder.varType(wt +wt);
             }
 
             if (matcher.group(7) != null) {

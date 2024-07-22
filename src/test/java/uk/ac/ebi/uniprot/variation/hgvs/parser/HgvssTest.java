@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import uk.ac.ebi.uniprot.variation.exception.InvalidHgvsException;
 import uk.ac.ebi.uniprot.variation.hgvs.Hgvs;
+import uk.ac.ebi.uniprot.variation.hgvs.HgvsDescription;
+import uk.ac.ebi.uniprot.variation.hgvs.HgvsProteinDescripton;
 import uk.ac.ebi.uniprot.variation.hgvs.HgvsType;
 
 public class HgvssTest {
@@ -132,5 +134,22 @@ public class HgvssTest {
         assertEquals(seqType, hgvs.getType());
         assertEquals(description, hgvs.getDescription().getValue());
         assertEquals(value, hgvs.getValue());
+    }
+    @Test
+    public void testSubstitutionDescriptionSingle() {
+        String val = "p.V600R"; 
+        Hgvs hgvs = Hgvss.from(val, false);
+        HgvsDescription descr = hgvs.getDescription();
+        
+       System.out.println(descr);
+    }
+    
+    @Test
+    public void testP() {
+        String val = "p.S247Qfs*8"; 
+        Hgvs hgvs = Hgvss.from(val, false);
+        HgvsDescription descr = hgvs.getDescription();
+        
+       System.out.println(descr);
     }
 }
